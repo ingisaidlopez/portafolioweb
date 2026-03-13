@@ -580,16 +580,6 @@
     .list-item:hover .click-indicator {
       opacity: 1;
     }
-
-    /* Image Fallback */
-    .img-fallback {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(145deg, #fafafa 0%, #f0f0f0 100%);
-      color: var(--muted);
-      font-size: 14px;
-    }
   </style>
 </head>
 <body>
@@ -598,7 +588,6 @@
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
     <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
       <a href="#" class="flex items-center gap-4">
-        <!-- LOGO PRINCIPAL -->
         <img src="https://drive.google.com/uc?export=view&id=18Gy-RI1tCiwAgUxcxDqzu6G1LCJHAelg" 
              alt="Logo Isaid López Martínez" 
              class="logo-img">
@@ -882,32 +871,24 @@
       <img id="modalImg" src="" alt="Documento">
       <h3 class="text-white font-display text-2xl mt-6" id="modalTitle"></h3>
       <p class="text-white/60 text-base mt-2" id="modalSubtitle"></p>
-      <a id="modalLink" href="" target="_blank" class="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-lg text-white text-sm transition-all">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-        </svg>
-        Abrir en Google Drive
-      </a>
     </div>
   </div>
 
   <script>
     // ========================================
-    // DATOS CON ENLACES EXACTOS DEL USUARIO
+    // SECCIÓN 1 Y 2 (datos existentes)
     // ========================================
-    
-    // Sección 1: Alta Dirección (permanece igual con URLs placeholder funcionales)
     const section1Docs = [
-      { id: 1, title: 'Constancia Calificación 95', subtitle: 'Evaluación de Competencia', cat: 'EMA', img: 'https://lh3.googleusercontent.com/u/0/d/1baO5-98aURbJnr6Rf_4DmexLfM4uelQs', link: 'https://drive.google.com/file/d/1baO5-98aURbJnr6Rf_4DmexLfM4uelQs/view' },
-      { id: 2, title: 'Diploma Administración Laboratorio', subtitle: 'Certificación EMA', cat: 'EMA', img: 'https://lh3.googleusercontent.com/u/0/d/1b5zvfjHUynR7USaB5OJHo-56XvuQV9rx', link: 'https://drive.google.com/file/d/1b5zvfjHUynR7USaB5OJHo-56XvuQV9rx/view' },
-      { id: 3, title: 'Formación Auditores Internos', subtitle: 'Laboratorio VIAJE', cat: 'AUDITORÍA', img: 'https://lh3.googleusercontent.com/u/0/d/18n7oOsg4bWqG-pvTXm_wuiZwa6q2AlPE', link: 'https://drive.google.com/file/d/18n7oOsg4bWqG-pvTXm_wuiZwa6q2AlPE/view' },
-      { id: 4, title: 'CV Isaid López Martínez', subtitle: 'Currículum Vitae', cat: 'CV', img: 'https://lh3.googleusercontent.com/u/0/d/1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_', link: 'https://drive.google.com/file/d/1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_/view' },
-      { id: 5, title: 'Aseguramiento de Calidad', subtitle: 'Querétaro', cat: 'CALIDAD', img: 'https://lh3.googleusercontent.com/u/0/d/18Tgc7dVblxrF4oqxRdaEKkLtAZRYMK10', link: 'https://drive.google.com/file/d/18Tgc7dVblxrF4oqxRdaEKkLtAZRYMK10/view' },
-      { id: 6, title: 'Aseguramiento de Calidad', subtitle: 'Puebla', cat: 'CALIDAD', img: 'https://lh3.googleusercontent.com/u/0/d/1RRUJO17BfF0rQjkEMzOkJuXBmoiHCVis', link: 'https://drive.google.com/file/d/1RRUJO17BfF0rQjkEMzOkJuXBmoiHCVis/view' },
-      { id: 7, title: 'Requisitos Normativos 17025', subtitle: 'Capacitación', cat: 'NORMA', img: 'https://lh3.googleusercontent.com/u/0/d/13iUPpOYMDN48HN8Ui14ERakQFu3gQs_o', link: 'https://drive.google.com/file/d/13iUPpOYMDN48HN8Ui14ERakQFu3gQs_o/view' },
-      { id: 8, title: 'Criterios de Aplicación EMA', subtitle: 'Procedimientos', cat: 'EMA', img: 'https://lh3.googleusercontent.com/u/0/d/117dvHX2Df2vMlFT91OhMEJCLibxR3VVo', link: 'https://drive.google.com/file/d/117dvHX2Df2vMlFT91OhMEJCLibxR3VVo/view' },
-      { id: 9, title: 'Anexo Criterios Técnicos', subtitle: 'Documentación', cat: 'TÉCNICO', img: 'https://lh3.googleusercontent.com/u/0/d/1iEf10-KYFXcunk_7J1XTeM5zydu-G8EW', link: 'https://drive.google.com/file/d/1iEf10-KYFXcunk_7J1XTeM5zydu-G8EW/view' },
-      { id: 10, title: 'Políticas de Trazabilidad', subtitle: 'Directrices', cat: 'METROLOGÍA', img: 'https://lh3.googleusercontent.com/u/0/d/1P2xFSpamzmIdosXrEG6rGRcVYEewzr51', link: 'https://drive.google.com/file/d/1P2xFSpamzmIdosXrEG6rGRcVYEewzr51/view' }
+      { id: 1, title: 'Constancia Calificación 95', subtitle: 'Evaluación de Competencia', cat: 'EMA', img: 'https://lh3.googleusercontent.com/u/0/d/1baO5-98aURbJnr6Rf_4DmexLfM4uelQs' },
+      { id: 2, title: 'Diploma Administración Laboratorio', subtitle: 'Certificación EMA', cat: 'EMA', img: 'https://lh3.googleusercontent.com/u/0/d/1b5zvfjHUynR7USaB5OJHo-56XvuQV9rx' },
+      { id: 3, title: 'Formación Auditores Internos', subtitle: 'Laboratorio VIAJE', cat: 'AUDITORÍA', img: 'https://lh3.googleusercontent.com/u/0/d/18n7oOsg4bWqG-pvTXm_wuiZwa6q2AlPE' },
+      { id: 4, title: 'CV Isaid López Martínez', subtitle: 'Currículum Vitae', cat: 'CV', img: 'https://lh3.googleusercontent.com/u/0/d/1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_' },
+      { id: 5, title: 'Aseguramiento de Calidad', subtitle: 'Querétaro', cat: 'CALIDAD', img: 'https://lh3.googleusercontent.com/u/0/d/18Tgc7dVblxrF4oqxRdaEKkLtAZRYMK10' },
+      { id: 6, title: 'Aseguramiento de Calidad', subtitle: 'Puebla', cat: 'CALIDAD', img: 'https://lh3.googleusercontent.com/u/0/d/1RRUJO17BfF0rQjkEMzOkJuXBmoiHCVis' },
+      { id: 7, title: 'Requisitos Normativos 17025', subtitle: 'Capacitación', cat: 'NORMA', img: 'https://lh3.googleusercontent.com/u/0/d/13iUPpOYMDN48HN8Ui14ERakQFu3gQs_o' },
+      { id: 8, title: 'Criterios de Aplicación EMA', subtitle: 'Procedimientos', cat: 'EMA', img: 'https://lh3.googleusercontent.com/u/0/d/117dvHX2Df2vMlFT91OhMEJCLibxR3VVo' },
+      { id: 9, title: 'Anexo Criterios Técnicos', subtitle: 'Documentación', cat: 'TÉCNICO', img: 'https://lh3.googleusercontent.com/u/0/d/1iEf10-KYFXcunk_7J1XTeM5zydu-G8EW' },
+      { id: 10, title: 'Políticas de Trazabilidad', subtitle: 'Directrices', cat: 'METROLOGÍA', img: 'https://lh3.googleusercontent.com/u/0/d/1P2xFSpamzmIdosXrEG6rGRcVYEewzr51' }
     ];
 
     const section2Docs = [
@@ -924,269 +905,9 @@
     ];
 
     // ========================================
-    // SECCIÓN 3: INFRAESTRUCTURA VIAL - ENLACES EXACTOS
+    // SECCIÓN 3: INFRAESTRUCTURA VIAL - ENLACES DIRECTOS
     // ========================================
-    const section3Docs = [
-      { 
-        id: 21, 
-        title: 'Congreso Carreteras', 
-        subtitle: 'Participación Técnica', 
-        cat: 'Congreso',
-        link: 'https://drive.google.com/file/d/1sdvakvf_uA0vdyHXxWRGu8zyRbuCGVG-/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1sdvakvf_uA0vdyHXxWRGu8zyRbuCGVG-'
-      },
-      { 
-        id: 22, 
-        title: 'Reunión EMA', 
-        subtitle: 'Sesión de Evaluadores', 
-        cat: 'EMA',
-        link: 'https://drive.google.com/file/d/1S2kUpSrFG2jUR9T5N25y4vXGPf7vSrwr/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1S2kUpSrFG2jUR9T5N25y4vXGPf7vSrwr'
-      },
-      { 
-        id: 23, 
-        title: 'Normativa Transporte', 
-        subtitle: 'Regulaciones SCT', 
-        cat: 'Normativa',
-        link: 'https://drive.google.com/file/d/1vdgp-1SlO4OsoG3kBqTY8NX2oY6vAcRh/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1vdgp-1SlO4OsoG3kBqTY8NX2oY6vAcRh'
-      },
-      { 
-        id: 24, 
-        title: 'Materiales Asfálticos', 
-        subtitle: 'Especificaciones', 
-        cat: 'Materiales',
-        link: 'https://drive.google.com/file/d/1-O7ZpAB-8nT-Er3AXgmaB6ymo9fmMCoR/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1-O7ZpAB-8nT-Er3AXgmaB6ymo9fmMCoR'
-      },
-      { 
-        id: 25, 
-        title: 'Terracerías y Pavimentos', 
-        subtitle: 'Diseño Estructural', 
-        cat: 'Pavimentos',
-        link: 'https://drive.google.com/file/d/1B8QVV0S0Bx2bZaepB6lDQADQAqw8igUb/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1B8QVV0S0Bx2bZaepB6lDQADQAqw8igUb'
-      },
-      { 
-        id: 26, 
-        title: 'Calidad Obra SCT', 
-        subtitle: 'Supervisión', 
-        cat: 'Calidad',
-        link: 'https://drive.google.com/file/d/1b-l6E1yeFQHXTuqzxXEMeT2DZ3E5XBjM/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1b-l6E1yeFQHXTuqzxXEMeT2DZ3E5XBjM'
-      },
-      { 
-        id: 27, 
-        title: 'Control de Calidad', 
-        subtitle: 'Obra Pública', 
-        cat: 'Supervisión',
-        link: 'https://drive.google.com/file/d/1b-l6E1yeFQHXTuqzxXEMeT2DZ3E5XBjM/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1b-l6E1yeFQHXTuqzxXEMeT2DZ3E5XBjM'
-      },
-      { 
-        id: 28, 
-        title: 'Supervisión Técnica', 
-        subtitle: 'Control de Obra', 
-        cat: 'Supervisión',
-        link: 'https://drive.google.com/file/d/1r5SNMyJNgxUZoX_ATVmlyMQTcg76ZvjM/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1r5SNMyJNgxUZoX_ATVmlyMQTcg76ZvjM'
-      },
-      { 
-        id: 29, 
-        title: 'Protocolos Entrega', 
-        subtitle: 'Recepción', 
-        cat: 'Protocolos',
-        link: 'https://drive.google.com/file/d/1G981oGfQ68BTs_wFdiJGKYNw8srkqDiU/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1G981oGfQ68BTs_wFdiJGKYNw8srkqDiU'
-      },
-      { 
-        id: 30, 
-        title: 'Seguridad Vial', 
-        subtitle: 'Normatividad', 
-        cat: 'Seguridad',
-        link: 'https://drive.google.com/file/d/1_h7Gl2IIfj6cGIip02tAnE_rDm6cntuF/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1_h7Gl2IIfj6cGIip02tAnE_rDm6cntuF'
-      }
-    ];
-
-    // ========================================
-    // SECCIÓN 4: GEOTECNIA Y CONCRETO - ENLACES EXACTOS
-    // ========================================
-    const section4Docs = [
-      { 
-        id: 31, 
-        title: 'Mecánica de Suelos', 
-        subtitle: 'Clasificación', 
-        h: 340,
-        link: 'https://drive.google.com/file/d/1z7DIjxcFqvyKK1aBwvJ-Xx_rglMbUUpg/view?usp=drive_link',
-        img: 'https://drive.google.com/uc?export=view&id=1z7DIjxcFqvyKK1aBwvJ-Xx_rglMbUUpg'
-      },
-      { 
-        id: 32, 
-        title: 'Tecnología del Concreto', 
-        subtitle: 'Diseño de Mezclas', 
-        h: 280,
-        link: 'https://drive.google.com/file/d/1gg3flSsdDWPKmFguqAEC2jznRoFwfIxH/view?usp=drive_link',
-        img: 'https://drive.google.com/uc?export=view&id=1gg3flSsdDWPKmFguqAEC2jznRoFwfIxH'
-      },
-      { 
-        id: 33, 
-        title: 'Ensayos de Compresión', 
-        subtitle: 'Probetas', 
-        h: 300,
-        link: 'https://drive.google.com/file/d/1yjexrxwG8ghMGzT9_JmcImY6V-50lCV5/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1yjexrxwG8ghMGzT9_JmcImY6V-50lCV5'
-      },
-      { 
-        id: 34, 
-        title: 'Exploración Geotécnica', 
-        subtitle: 'Sondeos', 
-        h: 380,
-        link: 'https://drive.google.com/file/d/1Ma33CPhwoFgVLBXHKtib87J0MKaCDCdW/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1Ma33CPhwoFgVLBXHKtib87J0MKaCDCdW'
-      },
-      { 
-        id: 35, 
-        title: 'Diseño de Mezclas ACI', 
-        subtitle: 'Método 211', 
-        h: 260,
-        link: 'https://drive.google.com/file/d/1ssSn8RZ1AyVQkBOQFShlH2nB5V1_tcAL/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1ssSn8RZ1AyVQkBOQFShlH2nB5V1_tcAL'
-      },
-      { 
-        id: 36, 
-        title: 'Compactación Proctor', 
-        subtitle: 'Densidad', 
-        h: 320,
-        link: 'https://drive.google.com/file/d/1WJJJDqlP5aPkaFHxMII8OZe5aamYPjwR/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1WJJJDqlP5aPkaFHxMII8OZe5aamYPjwR'
-      },
-      { 
-        id: 37, 
-        title: 'Pruebas de Carga', 
-        subtitle: 'Soporte', 
-        h: 290,
-        link: 'https://drive.google.com/file/d/1ja32u4ps2eGVRfA8_0p7NBkvquZYddFl/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1ja32u4ps2eGVRfA8_0p7NBkvquZYddFl'
-      },
-      { 
-        id: 38, 
-        title: 'Durabilidad del Concreto', 
-        subtitle: 'Ensayos', 
-        h: 350,
-        link: 'https://drive.google.com/file/d/1wNcCkFFELKjwwYMAc2yjbyxCjtv81wYA/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1wNcCkFFELKjwwYMAc2yjbyxCjtv81wYA'
-      },
-      { 
-        id: 39, 
-        title: 'Agregados Pétreos', 
-        subtitle: 'Caracterización', 
-        h: 270,
-        link: 'https://drive.google.com/file/d/1R-6rKApWyCS7-SHnFX5JdnMVTtSd4B1S/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1R-6rKApWyCS7-SHnFX5JdnMVTtSd4B1S'
-      },
-      { 
-        id: 40, 
-        title: 'Suelos de Fundación', 
-        subtitle: 'Análisis', 
-        h: 310,
-        link: 'https://drive.google.com/file/d/1cxpCiuMoxa70OD4qcwSjlkkCIGvPesH1/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1cxpCiuMoxa70OD4qcwSjlkkCIGvPesH1'
-      }
-    ];
-
-    // ========================================
-    // SECCIÓN 5: NORMATIVA Y FORMACIÓN - ENLACES EXACTOS
-    // ========================================
-    const section5Docs = [
-      { 
-        id: 41, 
-        title: 'NeoData Laboratory', 
-        subtitle: 'Gestión de Datos', 
-        type: 'software',
-        link: 'https://drive.google.com/file/d/1AsKW9Sdr7AojTxEfH7ypcOeRBy23c9Bl/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1AsKW9Sdr7AojTxEfH7ypcOeRBy23c9Bl'
-      },
-      { 
-        id: 42, 
-        title: 'AutoCAD Civil 3D', 
-        subtitle: 'Diseño', 
-        type: 'software',
-        link: 'https://drive.google.com/file/d/13HEeOb3LlBJZPYNrkBPCxNMU6Otuh2ML/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=13HEeOb3LlBJZPYNrkBPCxNMU6Otuh2ML'
-      },
-      { 
-        id: 43, 
-        title: 'SAP2000 Avanzado', 
-        subtitle: 'Análisis Estructural', 
-        type: 'software',
-        link: 'https://drive.google.com/file/d/1hDU0YQxXybuvuj9t9TekC1Am5nOdbcu7/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1hDU0YQxXybuvuj9t9TekC1Am5nOdbcu7'
-      },
-      { 
-        id: 44, 
-        title: 'Excel para Laboratorios', 
-        subtitle: 'Análisis de Datos', 
-        type: 'software',
-        link: 'https://drive.google.com/file/d/1KoR3XBcNu1M7RFlskR_DOT8fqS_YuXE6/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1KoR3XBcNu1M7RFlskR_DOT8fqS_YuXE6'
-      },
-      { 
-        id: 45, 
-        title: 'Webinar ISO 17025:2017', 
-        subtitle: 'Actualización Normativa', 
-        type: 'webinar',
-        link: 'https://drive.google.com/file/d/11LARqxRWW-GZ4TRNWXNIy060f8obsu_1/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=11LARqxRWW-GZ4TRNWXNIy060f8obsu_1'
-      },
-      { 
-        id: 46, 
-        title: 'Curso Virtual EMA', 
-        subtitle: 'Acreditación', 
-        type: 'curso',
-        link: 'https://drive.google.com/file/d/1YqaD48Hx0DyI0i4KigiGo9hPQfWyUAFi/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1YqaD48Hx0DyI0i4KigiGo9hPQfWyUAFi'
-      },
-      { 
-        id: 47, 
-        title: 'Diplomado en Línea', 
-        subtitle: 'Gestión de Calidad', 
-        type: 'diplomado',
-        link: 'https://drive.google.com/file/d/1b0m3leL97d6LHggzavyBwT0Yn7GERhSu/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1b0m3leL97d6LHggzavyBwT0Yn7GERhSu'
-      },
-      { 
-        id: 48, 
-        title: 'Capacitación NeoData', 
-        subtitle: 'Software de Laboratorio', 
-        type: 'software',
-        link: 'https://drive.google.com/file/d/1p4AGM9g03ayaex2JFvj-8eSuyP-6V6Z3/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1p4AGM9g03ayaex2JFvj-8eSuyP-6V6Z3'
-      },
-      { 
-        id: 49, 
-        title: 'Webinar Metrología', 
-        subtitle: 'Trazabilidad Metrológica', 
-        type: 'webinar',
-        link: 'https://drive.google.com/file/d/1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_'
-      },
-      { 
-        id: 50, 
-        title: 'Actualización Profesional', 
-        subtitle: 'Desarrollo Continuo', 
-        type: 'curso',
-        link: 'https://drive.google.com/file/d/1DgMNbgREJKObmi26XkM5YE1L2gzJDKws/view?usp=sharing',
-        img: 'https://drive.google.com/uc?export=view&id=1DgMNbgREJKObmi26XkM5YE1L2gzJDKws'
-      }
-    ];
-
-    const typeIcons = {
-      software: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>',
-      webinar: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>',
-      curso: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>',
-      diplomado: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>'
-    };
+   
 
     // DOM Elements
     const navbar = document.getElementById('navbar');
@@ -1194,7 +915,6 @@
     const modalImg = document.getElementById('modalImg');
     const modalTitle = document.getElementById('modalTitle');
     const modalSubtitle = document.getElementById('modalSubtitle');
-    const modalLink = document.getElementById('modalLink');
     const modalClose = document.getElementById('modalClose');
     const sliderTrack = document.getElementById('sliderTrack');
     const gridContainer = document.getElementById('gridContainer');
@@ -1211,9 +931,9 @@
     function renderSlider() {
       const items = [...section1Docs, ...section1Docs];
       sliderTrack.innerHTML = items.map(c => `
-        <a href="${c.link}" target="_blank" class="slide-card">
+        <div class="slide-card" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}')">
           <span class="click-indicator">Ver</span>
-          <img src="${c.img}" alt="${c.title}" onerror="this.src='https://placehold.co/400x300/f5f5f5/a52900?text=Doc+${c.id}'">
+          <img src="${c.img}" alt="${c.title}">
           <div class="p-6">
             <div class="flex items-center gap-3 mb-3">
               <span class="text-xs font-semibold text-rust uppercase">${c.cat}</span>
@@ -1222,15 +942,15 @@
             <h3 class="font-display text-xl text-charcoal">${c.title}</h3>
             <p class="text-sm text-muted mt-2">${c.subtitle}</p>
           </div>
-        </a>
+        </div>
       `).join('');
     }
 
     function renderGrid() {
       gridContainer.innerHTML = section2Docs.map(c => `
-        <div class="grid-card" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}', '')">
+        <div class="grid-card" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}')">
           <span class="click-indicator">Ver</span>
-          <img src="${c.img}" alt="${c.title}" onerror="this.src='https://placehold.co/400x380/f5f5f5/a52900?text=Doc+${c.id}'">
+          <img src="${c.img}" alt="${c.title}">
           <div class="grid-overlay">
             <span class="text-xs text-white/70 mb-2">#${c.id} - ${c.cat}</span>
             <h3 class="font-display text-2xl text-white">${c.title}</h3>
@@ -1240,12 +960,11 @@
       `).join('');
     }
 
-    // SECCIÓN 3: CAROUSEL - CON ENLACES EXACTOS
     function renderCarousel() {
       carouselTrack.innerHTML = section3Docs.map(c => `
-        <div class="carousel-card" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}', '${c.link}')">
+        <div class="carousel-card" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}')">
           <span class="click-indicator">Ver</span>
-          <img src="${c.img}" alt="${c.title}" onerror="this.src='https://placehold.co/320x240/f5f5f5/a52900?text=Doc+${c.id}'">
+          <img src="${c.img}" alt="${c.title}">
           <div class="p-5">
             <span class="text-xs font-semibold text-rust">#${c.id}</span>
             <h3 class="font-medium text-charcoal mt-2">${c.title}</h3>
@@ -1255,12 +974,11 @@
       `).join('');
     }
 
-    // SECCIÓN 4: MASONRY - CON ENLACES EXACTOS
     function renderMasonry() {
       masonryContainer.innerHTML = section4Docs.map(c => `
-        <div class="masonry-item" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}', '${c.link}')">
+        <div class="masonry-item" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}')">
           <span class="click-indicator">Ver</span>
-          <img src="${c.img}" style="height: ${c.h}px;" alt="${c.title}" onerror="this.src='https://placehold.co/400x${c.h}/f5f5f5/a52900?text=Doc+${c.id}'">
+          <img src="${c.img}" style="height: ${c.h}px;" alt="${c.title}">
           <div class="masonry-overlay">
             <p class="text-white font-display text-xl">${c.title}</p>
             <p class="text-white/70 text-sm mt-1">${c.subtitle}</p>
@@ -1270,10 +988,9 @@
       `).join('');
     }
 
-    // SECCIÓN 5: LIST - CON ENLACES EXACTOS
     function renderList() {
       listContainer.innerHTML = section5Docs.map(c => `
-        <div class="list-item" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}', '${c.link}')">
+        <div class="list-item" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}')">
           <span class="click-indicator">Ver</span>
           <div class="list-icon">${typeIcons[c.type]}</div>
           <div class="flex-1">
@@ -1289,15 +1006,12 @@
       `).join('');
     }
 
-    // ========================================
-    // MODAL - CON ENLACE A GOOGLE DRIVE
-    // ========================================
-    function openModal(imgUrl, title, subtitle, driveLink) {
+    // Modal
+    function openModal(imgUrl, title, subtitle) {
       modalImg.src = imgUrl;
       modalImg.alt = title;
       modalTitle.textContent = title;
       modalSubtitle.textContent = subtitle;
-      modalLink.href = driveLink || '#';
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
@@ -1311,9 +1025,7 @@
     modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    // ========================================
-    // CAROUSEL NAVIGATION
-    // ========================================
+    // Carousel Navigation
     let carouselPos = 0;
     const cardWidth = 344;
     let isDragging = false;
@@ -1331,7 +1043,7 @@
       carouselTrack.style.transform = `translateX(${carouselPos}px)`;
     });
 
-    // Touch/Mouse drag
+    // Mouse drag
     carouselTrack.addEventListener('mousedown', (e) => {
       isDragging = true;
       carouselTrack.classList.add('dragging');
@@ -1347,12 +1059,7 @@
     carouselTrack.addEventListener('mouseup', () => {
       isDragging = false;
       carouselTrack.classList.remove('dragging');
-      carouselPos = Math.round(carouselPos / cardWidth) * cardWidth;
-      const maxScroll = -(section3Docs.length * cardWidth - window.innerWidth + 160);
-      carouselPos = Math.max(carouselPos, maxScroll);
-      carouselPos = Math.min(carouselPos, 0);
-      carouselTrack.style.transition = 'transform 0.3s ease';
-      carouselTrack.style.transform = `translateX(${carouselPos}px)`;
+      snapCarousel();
     });
 
     carouselTrack.addEventListener('mousemove', (e) => {
@@ -1364,7 +1071,7 @@
       carouselTrack.style.transform = `translateX(${carouselPos}px)`;
     });
 
-    // Touch events
+    // Touch
     carouselTrack.addEventListener('touchstart', (e) => {
       isDragging = true;
       startX = e.touches[0].pageX - carouselTrack.offsetLeft;
@@ -1373,12 +1080,7 @@
 
     carouselTrack.addEventListener('touchend', () => {
       isDragging = false;
-      carouselPos = Math.round(carouselPos / cardWidth) * cardWidth;
-      const maxScroll = -(section3Docs.length * cardWidth - window.innerWidth + 160);
-      carouselPos = Math.max(carouselPos, maxScroll);
-      carouselPos = Math.min(carouselPos, 0);
-      carouselTrack.style.transition = 'transform 0.3s ease';
-      carouselTrack.style.transform = `translateX(${carouselPos}px)`;
+      snapCarousel();
     });
 
     carouselTrack.addEventListener('touchmove', (e) => {
@@ -1389,22 +1091,28 @@
       carouselTrack.style.transform = `translateX(${carouselPos}px)`;
     });
 
-    // ========================================
-    // SCROLL & REVEAL
-    // ========================================
+    function snapCarousel() {
+      carouselPos = Math.round(carouselPos / cardWidth) * cardWidth;
+      const maxScroll = -(section3Docs.length * cardWidth - window.innerWidth + 160);
+      carouselPos = Math.max(carouselPos, maxScroll);
+      carouselPos = Math.min(carouselPos, 0);
+      carouselTrack.style.transition = 'transform 0.3s ease';
+      carouselTrack.style.transform = `translateX(${carouselPos}px)`;
+    }
+
+    // Nav scroll
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('nav-solid', window.pageYOffset > 80);
     }, { passive: true });
 
+    // Reveal
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(e => e.isIntersecting && e.target.classList.add('active'));
     }, { threshold: 0.08 });
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // ========================================
-    // INICIALIZACIÓN
-    // ========================================
+    // Init
     renderSlider();
     renderGrid();
     renderCarousel();
