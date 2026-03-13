@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ing. Isaid López Martínez | Evaluador EMA & Especialista ISO 17025</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rust: '#a52900',
+            rustLight: '#c43c12',
+            rustDark: '#7a1f00',
+            charcoal: '#0f0f0f',
+            muted: '#5a5a5a',
+            surface: '#f9f9f9',
+            border: '#e8e8e8',
+          },
+          fontFamily: {
+            display: ['Cormorant Garamond', 'serif'],
+            body: ['DM Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --fg: #0f0f0f;
+      --muted: #5a5a5a;
+      --accent: #a52900;
+      --accent-light: #c43c12;
+      --border: #e8e8e8;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      overflow-x: hidden;
+    }
+
+    .font-display { font-family: 'Cormorant Garamond', serif; }
+
+    /* Navigation */
+    .nav-solid {
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 1px 40px rgba(0,0,0,0.04);
+    }
+
+    /* Spider Tooltip */
+    .spider-wrap { position: relative; }
+
+    .spider-tooltip {
+      position: absolute;
+      bottom: calc(100% + 14px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: #0f0f0f;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      z-index: 100;
+      letter-spacing: 0.02em;
+    }
+
+    .spider-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 8px solid transparent;
+      border-top-color: #0f0f0f;
+    }
+
+    .spider-wrap:hover .spider-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === SECTION 1: INFINITE SLIDER === */
+    .slider-container {
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent 0%, white 4%, white 96%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, white 4%, white 96%, transparent 100%);
+    }
+
+    .slider-track {
+      display: flex;
+      gap: 32px;
+      animation: slideInf 50s linear infinite;
+      width: max-content;
+    }
+
+    .slider-track:hover { animation-play-state: paused; }
+
+    @keyframes slideInf {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .slide-card {
+      flex-shrink: 0;
+      width: 420px;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .slide-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 32px 64px rgba(165,41,0,0.12);
+      border-color: rgba(165,41,0,0.2);
+    }
+
+    .slide-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: contain;
+      background: linear-gradient(145deg, #fafafa 0%, #f0f0f0 100%);
+      padding: 28px;
+      transition: transform 0.5s ease;
+    }
+
+    .slide-card:hover img { transform: scale(1.06); }
+
+    /* === SECTION 2: 2-COLUMN GRID === */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2col { grid-template-columns: 1fr; }
+    }
+
+    .grid-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      background: white;
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .grid-card img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .grid-card:hover img { transform: scale(1.15); }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,15,15,0.95) 0%, rgba(15,15,15,0.4) 40%, transparent 70%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .grid-card:hover .grid-overlay { opacity: 1; }
+
+    /* === SECTION 3: MANUAL CAROUSEL === */
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+      padding: 0 70px;
+    }
+
+    @media (max-width: 640px) {
+      .carousel-wrapper { padding: 0 50px; }
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 24px;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .carousel-card {
+      flex-shrink: 0;
+      width: 320px;
+      background: white;
+      border: 1.5px solid var(--accent);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    @media (max-width: 640px) {
+      .carousel-card { width: 260px; }
+    }
+
+    .carousel-card:hover {
+      box-shadow: 0 20px 50px rgba(165,41,0,0.1);
+      transform: translateY(-6px);
+    }
+
+    .carousel-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: contain;
+      background: #fafafa;
+      padding: 20px;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 54px;
+      height: 54px;
+      background: white;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      color: var(--accent);
+    }
+
+    .carousel-btn:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .carousel-btn.prev { left: 12px; }
+    .carousel-btn.next { right: 12px; }
+
+    /* === SECTION 4: MASONRY GALLERY === */
+    .masonry-grid {
+      column-count: 3;
+      column-gap: 24px;
+    }
+
+    @media (max-width: 1024px) { .masonry-grid { column-count: 2; } }
+    @media (max-width: 640px) { .masonry-grid { column-count: 1; } }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      cursor: pointer;
+      background: white;
+      border: 1px solid var(--border);
+      transition: all 0.4s ease;
+    }
+
+    .masonry-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.08);
+    }
+
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .masonry-item:hover img { transform: scale(1.06); }
+
+    .masonry-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15,15,15,0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .masonry-item:hover .masonry-overlay { opacity: 1; }
+
+    /* === SECTION 5: INTERACTIVE LIST === */
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 22px 26px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.35s ease;
+    }
+
+    .list-item:hover {
+      border-color: var(--accent);
+      transform: translateX(10px);
+      box-shadow: 0 12px 36px rgba(165,41,0,0.08);
+    }
+
+    .list-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(165,41,0,0.07);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+      transition: all 0.3s ease;
+    }
+
+    .list-item:hover .list-icon {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Modal Lightbox */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.94);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.35s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      max-width: 92vw;
+      max-height: 92vh;
+      text-align: center;
+      transform: scale(0.92);
+      transition: transform 0.35s ease;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 78vh;
+      border-radius: 16px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 12px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(255,255,255,0.2);
+      transform: rotate(90deg);
+    }
+
+    /* Hero Animations */
+    .hero-1 { opacity: 0; animation: heroIn 1s ease forwards 0.1s; }
+    .hero-2 { opacity: 0; animation: heroIn 1s ease forwards 0.3s; }
+    .hero-3 { opacity: 0; animation: heroIn 1s ease forwards 0.5s; }
+    .hero-4 { opacity: 0; animation: heroIn 1s ease forwards 0.7s; }
+
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(45px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Button Styles */
+    .btn-primary {
+      background: var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.18), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .btn-primary:hover::before { transform: translateX(100%); }
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Section Label */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      background: rgba(165,41,0,0.06);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    /* Accent Line */
+    .accent-line {
+      width: 50px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* Floating WhatsApp */
+    .float-wa {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 64px;
+      height: 64px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(165,41,0,0.4);
+      z-index: 100;
+      transition: all 0.3s ease;
+      animation: floatPulse 3s ease-in-out infinite;
+    }
+
+    .float-wa:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 48px rgba(165,41,0,0.5);
+    }
+
+    @keyframes floatPulse {
+      0%, 100% { box-shadow: 0 8px 32px rgba(165,41,0,0.4); }
+      50% { box-shadow: 0 8px 48px rgba(165,41,0,0.55), 0 0 0 12px rgba(165,41,0,0.08); }
+    }
+
+    /* Focus States */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    /* Decorative Background */
+    .hero-bg {
+      background: 
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(165,41,0,0.03) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 60% at 20% 80%, rgba(165,41,0,0.025) 0%, transparent 50%),
+        linear-gradient(180deg, #FFFFFF 0%, #fafafa 100%);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-rust rounded-xl flex items-center justify-center">
+          <span class="font-display text-white text-xl font-semibold">ILM</span>
+        </div>
+        <div class="hidden sm:block">
+          <p class="font-semibold text-charcoal text-sm">Isaid López Martínez</p>
+          <p class="text-xs text-muted tracking-wide">Evaluador EMA</p>
+        </div>
+      </a>
+      
+      <div class="flex items-center gap-8">
+        <div class="hidden lg:flex items-center gap-8">
+          <a href="#alta-direccion" class="text-sm font-medium text-muted hover:text-rust transition-colors">Acreditación</a>
+          <a href="#metrologia" class="text-sm font-medium text-muted hover:text-rust transition-colors">Metrología</a>
+          <a href="#infraestructura" class="text-sm font-medium text-muted hover:text-rust transition-colors">Infraestructura</a>
+          <a href="#geotecnia" class="text-sm font-medium text-muted hover:text-rust transition-colors">Geotecnia</a>
+          <a href="#software" class="text-sm font-medium text-muted hover:text-rust transition-colors">Software</a>
+        </div>
+        
+        <div class="spider-wrap flex items-center gap-2">
+          <a href="#contacto" class="text-sm font-medium text-muted hover:text-rust transition-colors">Contacto</a>
+          <svg class="w-5 h-5 text-muted hover:text-rust cursor-pointer transition-colors" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C10.5 2 9.5 3 9.5 4.5C9.5 5.5 10 6.3 10.8 6.7L8 9.5L4 7.5L3 9L6.5 11L5 14H2V16H5L6.5 13L10 15L8 19L9.5 20L12 16L14.5 20L16 19L14 15L17.5 13L19 16H22V14H19L17.5 11L21 9L20 7.5L16 9.5L13.2 6.7C14 6.3 14.5 5.5 14.5 4.5C14.5 3 13.5 2 12 2Z"/>
+          </svg>
+          <div class="spider-tooltip">Un gran poder conlleva una gran responsabilidad técnica.</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Banner -->
+  <header class="hero-bg min-h-screen flex items-center pt-24 pb-20 px-6">
+    <div class="max-w-7xl mx-auto w-full">
+      <div class="max-w-4xl">
+        <div class="hero-1 flex items-center gap-4 mb-8">
+          <div class="accent-line"></div>
+          <span class="section-label">Ingeniero Civil Senior</span>
+        </div>
+        
+        <h1 class="hero-2 font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-charcoal leading-[0.95] mb-6">
+          Ing. Isaid López Martínez
+        </h1>
+        
+        <p class="hero-3 text-xl sm:text-2xl text-muted leading-relaxed mb-8 max-w-2xl">
+          Evaluador EMA <span class="text-rust">|</span> Especialista en Gestión de Calidad 17025 <span class="text-rust">|</span> 12 Años de Trayectoria
+        </p>
+        
+        <div class="hero-4 flex flex-col sm:flex-row gap-4">
+          <a href="https://wa.me/529512042468" target="_blank" rel="noopener" 
+             class="btn-primary inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-white font-medium text-base transition-all">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Contactar por WhatsApp
+          </a>
+          
+          <a href="mailto:ing.isaid.lopez@gmail.com" 
+             class="btn-outline inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-medium text-base bg-white transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            Enviar Correo
+          </a>
+        </div>
+      </div>
+      
+      <!-- Stats -->
+      <div class="mt-24 pt-12 border-t border-border/60 flex flex-wrap gap-12 md:gap-20">
+        <div>
+          <p class="font-display text-5xl sm:text-6xl text-rust">50</p>
+          <p class="text-sm text-muted mt-2 tracking-wide">Documentos Certificados</p>
+        </div>
+        <div>
+          <p class="font-display text-5xl sm:text-6xl text-rust">12+</p>
+          <p class="text-sm text-muted mt-2 tracking-wide">Años de Experiencia</p>
+        </div>
+        <div>
+          <p class="font-display text-5xl sm:text-6xl text-rust">EMA</p>
+          <p class="text-sm text-muted mt-2 tracking-wide">Evaluador Acreditado</p>
+        </div>
+        <div>
+          <p class="font-display text-5xl sm:text-6xl text-rust">ISO</p>
+          <p class="text-sm text-muted mt-2 tracking-wide">17025 Especialista</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SECTION 1: Infinite Slider -->
+  <section id="alta-direccion" class="py-28 px-6">
+    <div class="max-w-7xl mx-auto mb-16 reveal">
+      <div class="section-label mb-6">
+        <span class="w-2 h-2 bg-rust rounded-full"></span>
+        Sección 1 de 5
+      </div>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Alta Dirección y Acreditación Maestra</h2>
+      <p class="text-muted text-lg max-w-2xl">Las 10 certificaciones más prestigiadas: EMA, INFE, MAAC y reconocimientos de alto nivel.</p>
+    </div>
+    
+    <div class="slider-container reveal" style="transition-delay: 0.15s;">
+      <div class="slider-track" id="sliderTrack"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: 2-Column Grid -->
+  <section id="metrologia" class="py-28 px-6 bg-surface">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-16 reveal">
+        <div class="section-label mb-6">
+          <span class="w-2 h-2 bg-rust rounded-full"></span>
+          Sección 2 de 5
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Metrología y Control de Calidad</h2>
+        <p class="text-muted text-lg max-w-2xl">Calibración, trazabilidad metrológica y sistemas de aseguramiento de calidad.</p>
+      </div>
+      
+      <div class="grid-2col reveal" style="transition-delay: 0.15s;" id="gridContainer"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Manual Carousel -->
+  <section id="infraestructura" class="py-28 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-16 reveal">
+        <div class="section-label mb-6">
+          <span class="w-2 h-2 bg-rust rounded-full"></span>
+          Sección 3 de 5
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Infraestructura Vial y Congresos</h2>
+        <p class="text-muted text-lg max-w-2xl">Diseño de pavimentos, ingeniería vial y participación en congresos técnicos.</p>
+      </div>
+      
+      <div class="carousel-wrapper reveal" style="transition-delay: 0.15s;">
+        <button class="carousel-btn prev" id="prevBtn" aria-label="Anterior">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        
+        <div class="carousel-track" id="carouselTrack"></div>
+        
+        <button class="carousel-btn next" id="nextBtn" aria-label="Siguiente">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: Masonry Gallery -->
+  <section id="geotecnia" class="py-28 px-6 bg-surface">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-16 reveal">
+        <div class="section-label mb-6">
+          <span class="w-2 h-2 bg-rust rounded-full"></span>
+          Sección 4 de 5
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Geotecnia y Tecnología del Concreto</h2>
+        <p class="text-muted text-lg max-w-2xl">Mecánica de suelos, diseño de mezclas y ensayos especializados de materiales.</p>
+      </div>
+      
+      <div class="masonry-grid reveal" style="transition-delay: 0.15s;" id="masonryContainer"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: Interactive List -->
+  <section id="software" class="py-28 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-16 reveal">
+        <div class="section-label mb-6">
+          <span class="w-2 h-2 bg-rust rounded-full"></span>
+          Sección 5 de 5
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Software Core y Actualización</h2>
+        <p class="text-muted text-lg max-w-2xl">Capacitación técnica en herramientas digitales y formación profesional continua.</p>
+      </div>
+      
+      <div class="flex flex-col gap-5 reveal" style="transition-delay: 0.15s;" id="listContainer"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contacto" class="py-24 px-6 border-t border-border">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-14 h-14 bg-rust rounded-xl flex items-center justify-center">
+              <span class="font-display text-white text-2xl font-semibold">ILM</span>
+            </div>
+            <div>
+              <p class="font-semibold text-charcoal text-lg">Ing. Isaid López Martínez</p>
+              <p class="text-sm text-muted">Evaluador EMA & Especialista ISO 17025</p>
+            </div>
+          </div>
+          <p class="text-muted leading-relaxed mb-10 max-w-md text-lg">
+            Transformando normativas técnicas en eficiencia operativa para proyectos de infraestructura de alto impacto en México.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="https://wa.me/529512042468" target="_blank" rel="noopener" 
+               class="btn-primary px-8 py-4 rounded-xl text-white font-medium flex items-center gap-3 transition-all">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              WhatsApp
+            </a>
+            <a href="mailto:ing.isaid.lopez@gmail.com" 
+               class="btn-outline px-8 py-4 rounded-xl font-medium flex items-center gap-3 bg-white transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              Email
+            </a>
+          </div>
+        </div>
+        
+        <div class="bg-surface rounded-2xl p-10 border border-border">
+          <h3 class="font-semibold text-charcoal text-lg mb-8">Información de Contacto</h3>
+          <div class="space-y-6">
+            <div class="flex items-center gap-5">
+              <div class="w-12 h-12 bg-rust/10 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs text-muted uppercase tracking-wide">Teléfono</p>
+                <p class="font-medium text-charcoal text-lg">951 204 24 68</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-5">
+              <div class="w-12 h-12 bg-rust/10 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs text-muted uppercase tracking-wide">Email</p>
+                <p class="font-medium text-charcoal text-lg">ing.isaid.lopez@gmail.com</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-5">
+              <div class="w-12 h-12 bg-rust/10 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs text-muted uppercase tracking-wide">Ubicación</p>
+                <p class="font-medium text-charcoal text-lg">Oaxaca de Juárez, México</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-20 pt-10 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-6">
+        <p class="text-sm text-muted">2024 Ing. Isaid López Martínez. Todos los derechos reservados.</p>
+        <p class="text-xs text-muted/60 tracking-wide">Portafolio de 50 Certificaciones Profesionales</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/529512042468" target="_blank" rel="noopener" class="float-wa" aria-label="Contactar por WhatsApp">
+    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- Modal Lightbox -->
+  <div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+    <div class="modal-content">
+      <img id="modalImg" src="" alt="Documento ampliado">
+      <h3 class="text-white font-display text-2xl mt-6" id="modalTitle"></h3>
+      <p class="text-white/60 text-base mt-2" id="modalSubtitle"></p>
+    </div>
+  </div>
+
+  <script>
+    // Certificate Data - 50 documents
+    const certificates = {
+      slider: [
+        { id: 1, title: 'Evaluador Técnico EMA', subtitle: 'Entidad Mexicana de Acreditación', cat: 'EMA' },
+        { id: 2, title: 'Padrón de Evaluadores Federal', subtitle: 'Registro Nacional de Evaluadores', cat: 'EMA' },
+        { id: 3, title: 'ISO/IEC 17025:2017', subtitle: 'Implementador Certificado', cat: 'ISO' },
+        { id: 4, title: 'Experto Técnico INFE', subtitle: 'Instituto Nacional de Formación', cat: 'INFE' },
+        { id: 5, title: 'MAAC Miembro Titular', subtitle: 'Academia Mexicana de Acreditación', cat: 'MAAC' },
+        { id: 6, title: 'Auditor Líder ISO 17025', subtitle: 'Certificación Internacional', cat: 'ISO' },
+        { id: 7, title: 'Diplomado Gestión de Calidad', subtitle: 'Laboratorios de Ensayo', cat: 'DIPLOMADO' },
+        { id: 8, title: 'NMX-EC-17025-IMNC', subtitle: 'Especialista en Implementación', cat: 'NMX' },
+        { id: 9, title: 'Reconocimiento ILAC-MRA', subtitle: 'Acreditación Internacional', cat: 'ILAC' },
+        { id: 10, title: 'Gestión de Calidad Avanzada', subtitle: 'Programa de Excelencia', cat: 'CALIDAD' },
+      ],
+      grid: [
+        { id: 11, title: 'Calibración de Equipos', subtitle: 'Trazabilidad Metrológica', cat: 'Metrología' },
+        { id: 12, title: 'Análisis de Incertidumbre', subtitle: 'Estadística Aplicada', cat: 'Calidad' },
+        { id: 13, title: 'Auditoría Interna ISO 17025', subtitle: 'Sistemas de Gestión', cat: 'Auditoría' },
+        { id: 14, title: 'Validación de Métodos', subtitle: 'Verificación Técnica', cat: 'Métodos' },
+        { id: 15, title: 'Ensayos de Aptitud', subtitle: 'Comparaciones Interlaboratorio', cat: 'Calidad' },
+        { id: 16, title: 'Control de Documentos', subtitle: 'Gestión de Registros', cat: 'Gestión' },
+        { id: 17, title: 'Acciones Correctivas', subtitle: 'Mejora Continua', cat: 'Calidad' },
+        { id: 18, title: 'Trazabilidad SI', subtitle: 'Sistema Internacional de Unidades', cat: 'Metrología' },
+        { id: 19, title: 'Gestión de No Conformidades', subtitle: 'Procedimientos de Control', cat: 'Gestión' },
+        { id: 20, title: 'Registros Técnicos', subtitle: 'Documentación de Laboratorio', cat: 'Documentación' },
+      ],
+      carousel: [
+        { id: 21, title: 'Diseño de Pavimentos AASHTO', subtitle: 'Método de Diseño Estructural', cat: 'Vial' },
+        { id: 22, title: 'Ingeniería de Carreteras', subtitle: 'Proyectos de Infraestructura', cat: 'Infraestructura' },
+        { id: 23, title: 'Congreso Nacional de Ingeniería', subtitle: 'Ponencia Técnica', cat: 'Congreso' },
+        { id: 24, title: 'Foro de Infraestructura', subtitle: 'Participación como Experto', cat: 'Evento' },
+        { id: 25, title: 'Inspección de Oras Viales', subtitle: 'Control de Calidad en Campo', cat: 'Campo' },
+        { id: 26, title: 'Seminario de Pavimentos', subtitle: 'Actualización Técnica', cat: 'Seminario' },
+        { id: 27, title: 'Normatividad en Carreteras', subtitle: 'Especificaciones SCT', cat: 'Normativa' },
+        { id: 28, title: 'Congreso de Calidad', subtitle: 'Certificado de Asistencia', cat: 'Congreso' },
+        { id: 29, title: 'Taller de Infraestructura', subtitle: 'Diseño y Construcción', cat: 'Taller' },
+        { id: 30, title: 'Simposio de Ingeniería', subtitle: 'Avances Tecnológicos', cat: 'Simposio' },
+      ],
+      masonry: [
+        { id: 31, title: 'Mecánica de Suelos', subtitle: 'Clasificación SUCS y AASHTO', h: 340 },
+        { id: 32, title: 'Tecnología del Concreto', subtitle: 'Diseño de Mezclas', h: 280 },
+        { id: 33, title: 'Ensayos de Compresión', subtitle: 'Probetas Cilíndricas', h: 300 },
+        { id: 34, title: 'Exploración Geotécnica', subtitle: 'Sondeos y Muestreo', h: 380 },
+        { id: 35, title: 'Diseño de Mezclas ACI', subtitle: 'Método 211', h: 260 },
+        { id: 36, title: 'Compactación Proctor', subtitle: 'Densidad Máxima', h: 320 },
+        { id: 37, title: 'Pruebas de Carga', subtitle: 'Capacidad de Soporte', h: 290 },
+        { id: 38, title: 'Durabilidad del Concreto', subtitle: 'Ensayos Especiales', h: 350 },
+        { id: 39, title: 'Agregados Petreos', subtitle: 'Caracterización Física', h: 270 },
+        { id: 40, title: 'Suelos de Fundación', subtitle: 'Análisis Estructural', h: 310 },
+      ],
+      list: [
+        { id: 41, title: 'NeoData Laboratory', subtitle: 'Gestión de Datos de Laboratorio', type: 'software' },
+        { id: 42, title: 'AutoCAD Civil 3D', subtitle: 'Diseño de Infraestructura', type: 'software' },
+        { id: 43, title: 'SAP2000 Avanzado', subtitle: 'Análisis Estructural', type: 'software' },
+        { id: 44, title: 'Excel para Laboratorios', subtitle: 'Análisis de Datos', type: 'software' },
+        { id: 45, title: 'Webinar: ISO 17025:2017', subtitle: 'Actualización de Norma', type: 'webinar' },
+        { id: 46, title: 'Curso Virtual de EMA', subtitle: 'Procesos de Acreditación', type: 'curso' },
+        { id: 47, title: 'Diplomado en Línea', subtitle: 'Calidad en Laboratorios', type: 'diplomado' },
+        { id: 48, title: 'Capacitación NeoData', subtitle: 'Software de Gestión', type: 'software' },
+        { id: 49, title: 'Webinar de Metrología', subtitle: 'Trazabilidad y Calibración', type: 'webinar' },
+        { id: 50, title: 'Actualización Profesional', subtitle: 'Desarrollo Continuo', type: 'curso' },
+      ]
+    };
+
+    // Icons for list
+    const typeIcons = {
+      software: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>',
+      webinar: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>',
+      curso: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>',
+      diplomado: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>'
+    };
+
+    // Placeholder generator
+    const placeholder = (text, cat) => `https://placehold.co/400x300/f8f8f8/1a1a1a?text=${encodeURIComponent(text)}`;
+
+    // DOM Elements - Initialize before use
+    const navbar = document.getElementById('navbar');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSubtitle = document.getElementById('modalSubtitle');
+    const modalClose = document.getElementById('modalClose');
+    const sliderTrack = document.getElementById('sliderTrack');
+    const gridContainer = document.getElementById('gridContainer');
+    const carouselTrack = document.getElementById('carouselTrack');
+    const masonryContainer = document.getElementById('masonryContainer');
+    const listContainer = document.getElementById('listContainer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    // Render Section 1: Slider
+    function renderSlider() {
+      const items = [...certificates.slider, ...certificates.slider];
+      sliderTrack.innerHTML = items.map(c => `
+        <div class="slide-card" onclick="openModal('${c.title}', '${c.subtitle}', '${c.cat}')">
+          <img src="${placeholder(c.title, c.cat)}" alt="${c.title}" loading="lazy">
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-xs font-semibold text-rust uppercase tracking-wider">${c.cat}</span>
+              <span class="text-xs text-muted">#${c.id}</span>
+            </div>
+            <h3 class="font-display text-xl text-charcoal">${c.title}</h3>
+            <p class="text-sm text-muted mt-2">${c.subtitle}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render Section 2: Grid
+    function renderGrid() {
+      gridContainer.innerHTML = certificates.grid.map(c => `
+        <div class="grid-card" onclick="openModal('${c.title}', '${c.subtitle}', '${c.cat}')">
+          <img src="${placeholder(c.title, c.cat)}" alt="${c.title}" loading="lazy">
+          <div class="grid-overlay">
+            <span class="text-xs text-white/70 mb-2">#${c.id} - ${c.cat}</span>
+            <h3 class="font-display text-2xl text-white">${c.title}</h3>
+            <p class="text-sm text-white/80 mt-1">${c.subtitle}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render Section 3: Carousel
+    function renderCarousel() {
+      carouselTrack.innerHTML = certificates.carousel.map(c => `
+        <div class="carousel-card" onclick="openModal('${c.title}', '${c.subtitle}', '${c.cat}')">
+          <img src="${placeholder(c.title, c.cat)}" alt="${c.title}" loading="lazy">
+          <div class="p-5">
+            <span class="text-xs font-semibold text-rust">#${c.id}</span>
+            <h3 class="font-medium text-charcoal mt-2">${c.title}</h3>
+            <p class="text-sm text-muted mt-1">${c.subtitle}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render Section 4: Masonry
+    function renderMasonry() {
+      masonryContainer.innerHTML = certificates.masonry.map(c => `
+        <div class="masonry-item" onclick="openModal('${c.title}', '${c.subtitle}', 'Geotecnia')">
+          <img src="${placeholder(c.title + ' ' + c.h, 'GEO')}" style="height: ${c.h}px; object-fit: cover;" alt="${c.title}" loading="lazy">
+          <div class="masonry-overlay">
+            <p class="text-white font-display text-xl">${c.title}</p>
+            <p class="text-white/70 text-sm mt-1">${c.subtitle}</p>
+            <p class="text-rust text-xs mt-3 font-semibold">#${c.id}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render Section 5: List
+    function renderList() {
+      listContainer.innerHTML = certificates.list.map(c => `
+        <div class="list-item" onclick="openModal('${c.title}', '${c.subtitle}', '${c.type}')">
+          <div class="list-icon">${typeIcons[c.type]}</div>
+          <div class="flex-1">
+            <span class="text-xs text-muted font-medium">#${c.id}</span>
+            <h3 class="font-semibold text-charcoal text-lg">${c.title}</h3>
+            <p class="text-sm text-muted">${c.subtitle}</p>
+          </div>
+          <svg class="w-5 h-5 text-rust flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+          </svg>
+        </div>
+      `).join('');
+    }
+
+    // Modal Functions
+    function openModal(title, subtitle, cat) {
+      modalImg.src = placeholder(title + ' - Vista Ampliada', cat);
+      modalImg.alt = title;
+      modalTitle.textContent = title;
+      modalSubtitle.textContent = subtitle;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // Carousel Navigation
+    let carouselPos = 0;
+    const cardWidth = 344;
+
+    prevBtn.addEventListener('click', () => {
+      carouselPos = Math.min(carouselPos + cardWidth, 0);
+      carouselTrack.style.transform = `translateX(${carouselPos}px)`;
+    });
+
+    nextBtn.addEventListener('click', () => {
+      const maxScroll = -(certificates.carousel.length * cardWidth - window.innerWidth + 160);
+      carouselPos = Math.max(carouselPos - cardWidth, maxScroll);
+      carouselTrack.style.transform = `translateX(${carouselPos}px)`;
+    });
+
+    // Navigation scroll
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 80) {
+        navbar.classList.add('nav-solid');
+      } else {
+        navbar.classList.remove('nav-solid');
+      }
+    }, { passive: true });
+
+    // Reveal Observer
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Initialize all renders
+    renderSlider();
+    renderGrid();
+    renderCarousel();
+    renderMasonry();
+    renderList();
+  </script>
+</body>
+</html>
