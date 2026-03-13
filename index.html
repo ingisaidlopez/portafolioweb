@@ -68,14 +68,14 @@
       box-shadow: 0 1px 40px rgba(0,0,0,0.04);
     }
 
-    /* Spider Tooltip */
+    /* Spider Tooltip - Corregido para aparecer hacia abajo */
     .spider-wrap { position: relative; }
 
     .spider-tooltip {
       position: absolute;
-      bottom: calc(100% + 14px);
+      top: calc(100% + 14px); /* Aparece abajo del icono */
       left: 50%;
-      transform: translateX(-50%) translateY(10px);
+      transform: translateX(-50%) translateY(-10px); /* Animación de entrada */
       background: #0f0f0f;
       color: white;
       padding: 12px 18px;
@@ -91,20 +91,21 @@
       letter-spacing: 0.02em;
     }
 
+    /* Flecha apuntando hacia arriba */
     .spider-tooltip::after {
       content: '';
       position: absolute;
-      top: 100%;
+      bottom: 100%; /* Posicionada en la parte superior del tooltip */
       left: 50%;
       transform: translateX(-50%);
       border: 8px solid transparent;
-      border-top-color: #0f0f0f;
+      border-bottom-color: #0f0f0f; /* La flecha apunta hacia arriba */
     }
 
     .spider-wrap:hover .spider-tooltip {
       opacity: 1;
       visibility: visible;
-      transform: translateX(-50%) translateY(0);
+      transform: translateX(-50%) translateY(0); /* Desliza hacia abajo suavemente */
     }
 
     /* Reveal Animation */
