@@ -194,11 +194,12 @@
     .grid-card img {
       width: 100%;
       height: 380px;
-      object-fit: cover;
+      object-fit: contain;
+      background: linear-gradient(145deg, #fafafa 0%, #f0f0f0 100%);
       transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .grid-card:hover img { transform: scale(1.15); }
+    .grid-card:hover img { transform: scale(1.1); }
 
     .grid-overlay {
       position: absolute;
@@ -551,9 +552,11 @@
       letter-spacing: 0.05em;
       opacity: 0;
       transition: opacity 0.3s ease;
+      z-index: 10;
     }
 
-    .slide-card:hover .click-indicator {
+    .slide-card:hover .click-indicator,
+    .grid-card:hover .click-indicator {
       opacity: 1;
     }
   </style>
@@ -651,7 +654,7 @@
     </div>
   </header>
 
-  <!-- SECTION 1: Infinite Slider - ACTUALIZADO CON ENLACES REALES -->
+  <!-- SECTION 1: Infinite Slider - CON DIRECT LINKS -->
   <section id="alta-direccion" class="py-28 px-6">
     <div class="max-w-7xl mx-auto mb-16 reveal">
       <div class="section-label mb-6">
@@ -667,7 +670,7 @@
     </div>
   </section>
 
-  <!-- SECTION 2: 2-Column Grid -->
+  <!-- SECTION 2: 2-Column Grid - CON DIRECT LINKS -->
   <section id="metrologia" class="py-28 px-6 bg-surface">
     <div class="max-w-7xl mx-auto">
       <div class="mb-16 reveal">
@@ -676,7 +679,7 @@
           Sección 2 de 5
         </div>
         <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Metrología y Control de Calidad</h2>
-        <p class="text-muted text-lg max-w-2xl">Calibración, trazabilidad metrológica y sistemas de aseguramiento de calidad.</p>
+        <p class="text-muted text-lg max-w-2xl">Calibración, trazabilidad metrológica y sistemas de aseguramiento de calidad. Haz clic para ampliar cada documento.</p>
       </div>
       
       <div class="grid-2col reveal" style="transition-delay: 0.15s;" id="gridContainer"></div>
@@ -845,7 +848,7 @@
       </svg>
     </button>
     <div class="modal-content">
-      <img id="modalImg" src="" alt="Documento ampliado">
+      <img id="modalImg" src="" alt="Documento ampliado" referrerpolicy="no-referrer">
       <h3 class="text-white font-display text-2xl mt-6" id="modalTitle"></h3>
       <p class="text-white/60 text-base mt-2" id="modalSubtitle"></p>
     </div>
@@ -853,7 +856,7 @@
 
   <script>
     // ========================================
-    // SECCIÓN 1: ENLACES REALES DE GOOGLE DRIVE
+    // SECCIÓN 1: DIRECT LINKS DE GOOGLE
     // ========================================
     const section1Docs = [
       {
@@ -861,7 +864,7 @@
         title: 'Constancia Calificación 95',
         subtitle: 'Evaluación de Competencia Técnica',
         cat: 'EMA',
-        driveId: '1baO5-98aURbJnr6Rf_4DmexLfM4uelQs',
+        img: 'https://lh3.googleusercontent.com/u/0/d/1baO5-98aURbJnr6Rf_4DmexLfM4uelQs',
         link: 'https://drive.google.com/file/d/1baO5-98aURbJnr6Rf_4DmexLfM4uelQs/view?usp=sharing'
       },
       {
@@ -869,7 +872,7 @@
         title: 'Diploma Administración Laboratorio',
         subtitle: 'Certificación EMA',
         cat: 'EMA',
-        driveId: '1b5zvfjHUynR7USaB5OJHo-56XvuQV9rx',
+        img: 'https://lh3.googleusercontent.com/u/0/d/1b5zvfjHUynR7USaB5OJHo-56XvuQV9rx',
         link: 'https://drive.google.com/file/d/1b5zvfjHUynR7USaB5OJHo-56XvuQV9rx/view?usp=drive_link'
       },
       {
@@ -877,7 +880,7 @@
         title: 'Formación Auditores Internos',
         subtitle: 'Laboratorio VIAJE',
         cat: 'AUDITORÍA',
-        driveId: '18n7oOsg4bWqG-pvTXm_wuiZwa6q2AlPE',
+        img: 'https://lh3.googleusercontent.com/u/0/d/18n7oOsg4bWqG-pvTXm_wuiZwa6q2AlPE',
         link: 'https://drive.google.com/file/d/18n7oOsg4bWqG-pvTXm_wuiZwa6q2AlPE/view?usp=sharing'
       },
       {
@@ -885,7 +888,7 @@
         title: 'CV Isaid López Martínez',
         subtitle: 'Currículum Vitae Profesional',
         cat: 'CV',
-        driveId: '1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_',
+        img: 'https://lh3.googleusercontent.com/u/0/d/1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_',
         link: 'https://drive.google.com/file/d/1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_/view?usp=sharing'
       },
       {
@@ -893,7 +896,7 @@
         title: 'Aseguramiento de Calidad',
         subtitle: 'Querétaro',
         cat: 'CALIDAD',
-        driveId: '18Tgc7dVblxrF4oqxRdaEKkLtAZRYMK10',
+        img: 'https://lh3.googleusercontent.com/u/0/d/18Tgc7dVblxrF4oqxRdaEKkLtAZRYMK10',
         link: 'https://drive.google.com/file/d/18Tgc7dVblxrF4oqxRdaEKkLtAZRYMK10/view?usp=sharing'
       },
       {
@@ -901,7 +904,7 @@
         title: 'Aseguramiento de Calidad',
         subtitle: 'Puebla',
         cat: 'CALIDAD',
-        driveId: '1RRUJO17BfF0rQjkEMzOkJuXBmoiHCVis',
+        img: 'https://lh3.googleusercontent.com/u/0/d/1RRUJO17BfF0rQjkEMzOkJuXBmoiHCVis',
         link: 'https://drive.google.com/file/d/1RRUJO17BfF0rQjkEMzOkJuXBmoiHCVis/view?usp=sharing'
       },
       {
@@ -909,7 +912,7 @@
         title: 'Requisitos Normativos 17025',
         subtitle: 'Capacitación Especializada',
         cat: 'NORMA',
-        driveId: '13iUPpOYMDN48HN8Ui14ERakQFu3gQs_o',
+        img: 'https://lh3.googleusercontent.com/u/0/d/13iUPpOYMDN48HN8Ui14ERakQFu3gQs_o',
         link: 'https://drive.google.com/file/d/13iUPpOYMDN48HN8Ui14ERakQFu3gQs_o/view?usp=sharing'
       },
       {
@@ -917,7 +920,7 @@
         title: 'Criterios de Aplicación EMA',
         subtitle: 'Procedimientos de Evaluación',
         cat: 'EMA',
-        driveId: '117dvHX2Df2vMlFT91OhMEJCLibxR3VVo',
+        img: 'https://lh3.googleusercontent.com/u/0/d/117dvHX2Df2vMlFT91OhMEJCLibxR3VVo',
         link: 'https://drive.google.com/file/d/117dvHX2Df2vMlFT91OhMEJCLibxR3VVo/view?usp=sharing'
       },
       {
@@ -925,7 +928,7 @@
         title: 'Anexo Criterios Técnicos',
         subtitle: 'Documentación Complementaria',
         cat: 'TÉCNICO',
-        driveId: '1iEf10-KYFXcunk_7J1XTeM5zydu-G8EW',
+        img: 'https://lh3.googleusercontent.com/u/0/d/1iEf10-KYFXcunk_7J1XTeM5zydu-G8EW',
         link: 'https://drive.google.com/file/d/1iEf10-KYFXcunk_7J1XTeM5zydu-G8EW/view?usp=sharing'
       },
       {
@@ -933,25 +936,29 @@
         title: 'Políticas de Trazabilidad',
         subtitle: 'Directrices Metrológicas',
         cat: 'METROLOGÍA',
-        driveId: '1P2xFSpamzmIdosXrEG6rGRcVYEewzr51',
+        img: 'https://lh3.googleusercontent.com/u/0/d/1P2xFSpamzmIdosXrEG6rGRcVYEewzr51',
         link: 'https://drive.google.com/file/d/1P2xFSpamzmIdosXrEG6rGRcVYEewzr51/view?usp=sharing'
       }
     ];
 
+    // ========================================
+    // SECCIÓN 2: DIRECT LINKS DE GOOGLE
+    // ========================================
+    const section2Docs = [
+      { id: 11, title: 'Calibración de Equipos', subtitle: 'Trazabilidad Metrológica', cat: 'Metrología', img: 'https://lh3.googleusercontent.com/u/0/d/1yamFMOUjn5HG1oy__LrBJ_4k7p07jX8G' },
+      { id: 12, title: 'Análisis de Incertidumbre', subtitle: 'Estadística Aplicada', cat: 'Calidad', img: 'https://lh3.googleusercontent.com/u/0/d/1w5MK3IWMZeoVIu3CVadlRZhGh6R9IsuO' },
+      { id: 13, title: 'Auditoría Interna ISO 17025', subtitle: 'Sistemas de Gestión', cat: 'Auditoría', img: 'https://lh3.googleusercontent.com/u/0/d/1CX4ZeXdfVtP0aZ3_ypNFrtD2FeNO7FkE' },
+      { id: 14, title: 'Validación de Métodos', subtitle: 'Verificación Técnica', cat: 'Métodos', img: 'https://lh3.googleusercontent.com/u/0/d/15-soRYmoiHcSSE4Z7FEvFF_reWzYsKyX' },
+      { id: 15, title: 'Ensayos de Aptitud', subtitle: 'Comparaciones Interlaboratorio', cat: 'Calidad', img: 'https://lh3.googleusercontent.com/u/0/d/1GbV-hxaqJwN3MIua9xJObsQsQODmIQ7r' },
+      { id: 16, title: 'Control de Documentos', subtitle: 'Gestión de Registros', cat: 'Gestión', img: 'https://lh3.googleusercontent.com/u/0/d/1lhiqKc5_QoIR_8SA-0whfRmnQu1MsBtf' },
+      { id: 17, title: 'Acciones Correctivas', subtitle: 'Mejora Continua', cat: 'Calidad', img: 'https://lh3.googleusercontent.com/u/0/d/1piJ5jjPBavTAuk_uXW1VYcXpHpke8Lx8' },
+      { id: 18, title: 'Trazabilidad SI', subtitle: 'Sistema Internacional de Unidades', cat: 'Metrología', img: 'https://lh3.googleusercontent.com/u/0/d/1DdbLZZ7JFq-9j-p2df1c_GZl3hRSHGgZ' },
+      { id: 19, title: 'Gestión de No Conformidades', subtitle: 'Procedimientos de Control', cat: 'Gestión', img: 'https://lh3.googleusercontent.com/u/0/d/1EhYNdnJW1SvwEMI-f8p9bB__m4M3_QLj' },
+      { id: 20, title: 'Registros Técnicos', subtitle: 'Documentación de Laboratorio', cat: 'Documentación', img: 'https://lh3.googleusercontent.com/u/0/d/13Lr82M3C3CiXJAVNzPxQyM8wZyNY5ZkR' }
+    ];
+
     // Resto de certificados (placeholders)
     const certificates = {
-      grid: [
-        { id: 11, title: 'Calibración de Equipos', subtitle: 'Trazabilidad Metrológica', cat: 'Metrología' },
-        { id: 12, title: 'Análisis de Incertidumbre', subtitle: 'Estadística Aplicada', cat: 'Calidad' },
-        { id: 13, title: 'Auditoría Interna ISO 17025', subtitle: 'Sistemas de Gestión', cat: 'Auditoría' },
-        { id: 14, title: 'Validación de Métodos', subtitle: 'Verificación Técnica', cat: 'Métodos' },
-        { id: 15, title: 'Ensayos de Aptitud', subtitle: 'Comparaciones Interlaboratorio', cat: 'Calidad' },
-        { id: 16, title: 'Control de Documentos', subtitle: 'Gestión de Registros', cat: 'Gestión' },
-        { id: 17, title: 'Acciones Correctivas', subtitle: 'Mejora Continua', cat: 'Calidad' },
-        { id: 18, title: 'Trazabilidad SI', subtitle: 'Sistema Internacional de Unidades', cat: 'Metrología' },
-        { id: 19, title: 'Gestión de No Conformidades', subtitle: 'Procedimientos de Control', cat: 'Gestión' },
-        { id: 20, title: 'Registros Técnicos', subtitle: 'Documentación de Laboratorio', cat: 'Documentación' },
-      ],
       carousel: [
         { id: 21, title: 'Diseño de Pavimentos AASHTO', subtitle: 'Método de Diseño Estructural', cat: 'Vial' },
         { id: 22, title: 'Ingeniería de Carreteras', subtitle: 'Proyectos de Infraestructura', cat: 'Infraestructura' },
@@ -1001,9 +1008,6 @@
     // Placeholder generator
     const placeholder = (text, cat) => `https://placehold.co/400x300/f8f8f8/1a1a1a?text=${encodeURIComponent(text)}`;
 
-    // Google Drive image URL generator
-    const getDriveImage = (driveId) => `https://drive.google.com/uc?export=view&id=${driveId}`;
-
     // DOM Elements
     const navbar = document.getElementById('navbar');
     const modal = document.getElementById('modal');
@@ -1020,18 +1024,18 @@
     const nextBtn = document.getElementById('nextBtn');
 
     // ========================================
-    // RENDER SECTION 1: SLIDER WITH REAL LINKS
+    // RENDER SECTION 1: SLIDER CON DIRECT LINKS
     // ========================================
     function renderSlider() {
-      // Duplicar para loop infinito
       const items = [...section1Docs, ...section1Docs];
       sliderTrack.innerHTML = items.map(c => `
         <a href="${c.link}" target="_blank" rel="noopener noreferrer" class="slide-card">
           <span class="click-indicator">Ver documento</span>
-          <img src="${getDriveImage(c.driveId)}" 
+          <img src="${c.img}" 
                alt="${c.title}" 
                loading="lazy"
-               onerror="this.src='${placeholder(c.title, c.cat)}'">
+               referrerpolicy="no-referrer"
+               onerror="this.onerror=null; this.src='${placeholder(c.title, c.cat)}'">
           <div class="p-6">
             <div class="flex items-center gap-3 mb-3">
               <span class="text-xs font-semibold text-rust uppercase tracking-wider">${c.cat}</span>
@@ -1044,11 +1048,18 @@
       `).join('');
     }
 
-    // Render Section 2: Grid
+    // ========================================
+    // RENDER SECTION 2: GRID CON DIRECT LINKS
+    // ========================================
     function renderGrid() {
-      gridContainer.innerHTML = certificates.grid.map(c => `
-        <div class="grid-card" onclick="openModal('${c.title}', '${c.subtitle}', '${c.cat}')">
-          <img src="${placeholder(c.title, c.cat)}" alt="${c.title}" loading="lazy">
+      gridContainer.innerHTML = section2Docs.map(c => `
+        <div class="grid-card" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}')">
+          <span class="click-indicator">Ver documento</span>
+          <img src="${c.img}" 
+               alt="${c.title}" 
+               loading="lazy"
+               referrerpolicy="no-referrer"
+               onerror="this.onerror=null; this.src='${placeholder(c.title, c.cat)}'">
           <div class="grid-overlay">
             <span class="text-xs text-white/70 mb-2">#${c.id} - ${c.cat}</span>
             <h3 class="font-display text-2xl text-white">${c.title}</h3>
@@ -1061,7 +1072,7 @@
     // Render Section 3: Carousel
     function renderCarousel() {
       carouselTrack.innerHTML = certificates.carousel.map(c => `
-        <div class="carousel-card" onclick="openModal('${c.title}', '${c.subtitle}', '${c.cat}')">
+        <div class="carousel-card" onclick="openModal('${placeholder(c.title, c.cat)}', '${c.title}', '${c.subtitle}')">
           <img src="${placeholder(c.title, c.cat)}" alt="${c.title}" loading="lazy">
           <div class="p-5">
             <span class="text-xs font-semibold text-rust">#${c.id}</span>
@@ -1075,7 +1086,7 @@
     // Render Section 4: Masonry
     function renderMasonry() {
       masonryContainer.innerHTML = certificates.masonry.map(c => `
-        <div class="masonry-item" onclick="openModal('${c.title}', '${c.subtitle}', 'Geotecnia')">
+        <div class="masonry-item" onclick="openModal('${placeholder(c.title + ' ' + c.h, 'GEO')}', '${c.title}', '${c.subtitle}')">
           <img src="${placeholder(c.title + ' ' + c.h, 'GEO')}" style="height: ${c.h}px; object-fit: cover;" alt="${c.title}" loading="lazy">
           <div class="masonry-overlay">
             <p class="text-white font-display text-xl">${c.title}</p>
@@ -1089,7 +1100,7 @@
     // Render Section 5: List
     function renderList() {
       listContainer.innerHTML = certificates.list.map(c => `
-        <div class="list-item" onclick="openModal('${c.title}', '${c.subtitle}', '${c.type}')">
+        <div class="list-item" onclick="openModal('${placeholder(c.title, c.type)}', '${c.title}', '${c.subtitle}')">
           <div class="list-icon">${typeIcons[c.type]}</div>
           <div class="flex-1">
             <span class="text-xs text-muted font-medium">#${c.id}</span>
@@ -1104,9 +1115,9 @@
       `).join('');
     }
 
-    // Modal Functions
-    function openModal(title, subtitle, cat) {
-      modalImg.src = placeholder(title + ' - Vista Ampliada', cat);
+    // Modal Functions - Ahora acepta URL de imagen
+    function openModal(imgUrl, title, subtitle) {
+      modalImg.src = imgUrl;
       modalImg.alt = title;
       modalTitle.textContent = title;
       modalSubtitle.textContent = subtitle;
