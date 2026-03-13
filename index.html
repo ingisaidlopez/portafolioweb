@@ -3,17 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ing. Isaid López Martínez | Evaluador EMA</title>
+  <title>Ing. Isaid López Martínez | Evaluador EMA & Especialista ISO 17025</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
             rust: '#a52900',
+            rustLight: '#c43c12',
+            rustDark: '#7a1f00',
             charcoal: '#0f0f0f',
             muted: '#5a5a5a',
+            surface: '#f9f9f9',
             border: '#e8e8e8',
           },
           fontFamily: {
@@ -25,22 +30,55 @@
     }
   </script>
   <style>
+    :root {
+      --bg: #FFFFFF;
+      --fg: #0f0f0f;
+      --muted: #5a5a5a;
+      --accent: #a52900;
+      --accent-light: #c43c12;
+      --border: #e8e8e8;
+    }
+
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: #fff; color: #0f0f0f; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      overflow-x: hidden;
+    }
+
     .font-display { font-family: 'Cormorant Garamond', serif; }
-    
+
+    /* Navigation */
     .nav-solid {
       background: rgba(255,255,255,0.98);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       box-shadow: 0 1px 40px rgba(0,0,0,0.04);
     }
-    
+
     /* Logo */
-    .logo-img { height: 50px; width: auto; object-fit: contain; }
-    
+    .logo-img {
+      height: 50px;
+      width: auto;
+      max-height: 50px;
+      object-fit: contain;
+    }
+
     /* Spider Tooltip */
     .spider-wrap { position: relative; }
+
     .spider-tooltip {
       position: absolute;
       top: calc(100% + 14px);
@@ -55,10 +93,12 @@
       white-space: nowrap;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.35s ease;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       pointer-events: none;
       z-index: 100;
+      letter-spacing: 0.02em;
     }
+
     .spider-tooltip::after {
       content: '';
       position: absolute;
@@ -68,109 +108,111 @@
       border: 8px solid transparent;
       border-bottom-color: #0f0f0f;
     }
+
     .spider-wrap:hover .spider-tooltip {
       opacity: 1;
       visibility: visible;
       transform: translateX(-50%) translateY(0);
     }
-    
-    /* Image Container with Loading State */
-    .img-container {
-      position: relative;
-      background: linear-gradient(145deg, #fafafa, #f0f0f0);
-      overflow: hidden;
+
+    /* Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    
-    .img-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
     }
-    
-    .img-container.loading::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-    }
-    
-    .img-container.error::after {
-      content: 'Documento no disponible';
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #888;
-      font-size: 12px;
-      text-align: center;
-      padding: 20px;
-    }
-    
-    @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-    
-    /* Slider */
+
+    /* === SECTION 1: INFINITE SLIDER === */
     .slider-container {
       overflow: hidden;
-      mask-image: linear-gradient(90deg, transparent, white 5%, white 95%, transparent);
+      mask-image: linear-gradient(90deg, transparent 0%, white 4%, white 96%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, white 4%, white 96%, transparent 100%);
     }
+
     .slider-track {
       display: flex;
       gap: 32px;
       animation: slideInf 50s linear infinite;
       width: max-content;
     }
+
     .slider-track:hover { animation-play-state: paused; }
+
     @keyframes slideInf {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
+
     .slide-card {
       flex-shrink: 0;
       width: 420px;
       background: white;
       border-radius: 20px;
       overflow: hidden;
-      border: 1px solid var(--border, #e8e8e8);
-      transition: all 0.5s ease;
+      border: 1px solid var(--border);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
       text-decoration: none;
       display: block;
     }
+
     .slide-card:hover {
       transform: translateY(-12px) scale(1.02);
       box-shadow: 0 32px 64px rgba(165,41,0,0.12);
+      border-color: rgba(165,41,0,0.2);
     }
-    .slide-card .img-container { height: 300px; padding: 28px; }
-    
-    /* Grid */
+
+    .slide-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: contain;
+      background: linear-gradient(145deg, #fafafa 0%, #f0f0f0 100%);
+      padding: 28px;
+      transition: transform 0.5s ease;
+    }
+
+    .slide-card:hover img { transform: scale(1.06); }
+
+    /* === SECTION 2: 2-COLUMN GRID === */
     .grid-2col {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 28px;
     }
-    @media (max-width: 768px) { .grid-2col { grid-template-columns: 1fr; } }
+
+    @media (max-width: 768px) {
+      .grid-2col { grid-template-columns: 1fr; }
+    }
+
     .grid-card {
       position: relative;
       overflow: hidden;
       border-radius: 18px;
       background: white;
-      border: 1px solid #e8e8e8;
+      border: 1px solid var(--border);
       cursor: pointer;
     }
-    .grid-card .img-container { height: 380px; }
-    .grid-card img { transition: transform 0.7s ease; }
+
+    .grid-card img {
+      width: 100%;
+      height: 380px;
+      object-fit: contain;
+      background: linear-gradient(145deg, #fafafa 0%, #f0f0f0 100%);
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
     .grid-card:hover img { transform: scale(1.1); }
+
     .grid-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(15,15,15,0.95), transparent 70%);
+      background: linear-gradient(to top, rgba(15,15,15,0.95) 0%, rgba(15,15,15,0.4) 40%, transparent 70%);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -178,37 +220,65 @@
       opacity: 0;
       transition: opacity 0.4s ease;
     }
+
     .grid-card:hover .grid-overlay { opacity: 1; }
-    
-    /* Carousel */
+
+    /* === SECTION 3: CAROUSEL === */
     .carousel-wrapper {
       position: relative;
       overflow: hidden;
       padding: 0 70px;
     }
-    @media (max-width: 640px) { .carousel-wrapper { padding: 0 50px; } }
+
+    @media (max-width: 640px) {
+      .carousel-wrapper { padding: 0 50px; }
+    }
+
     .carousel-track {
       display: flex;
       gap: 24px;
-      transition: transform 0.6s ease;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: grab;
       user-select: none;
     }
+
+    .carousel-track.dragging {
+      cursor: grabbing;
+      transition: none;
+    }
+
     .carousel-card {
       flex-shrink: 0;
       width: 320px;
       background: white;
-      border: 1.5px solid #a52900;
+      border: 1.5px solid var(--accent);
       border-radius: 16px;
       overflow: hidden;
       transition: all 0.4s ease;
+      pointer-events: none;
     }
-    @media (max-width: 640px) { .carousel-card { width: 260px; } }
+
+    .carousel-track:not(.dragging) .carousel-card {
+      pointer-events: auto;
+    }
+
+    @media (max-width: 640px) {
+      .carousel-card { width: 260px; }
+    }
+
     .carousel-card:hover {
       box-shadow: 0 20px 50px rgba(165,41,0,0.1);
       transform: translateY(-6px);
     }
-    .carousel-card .img-container { height: 240px; padding: 20px; }
+
+    .carousel-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: contain;
+      background: #fafafa;
+      padding: 20px;
+    }
+
     .carousel-btn {
       position: absolute;
       top: 50%;
@@ -216,7 +286,7 @@
       width: 54px;
       height: 54px;
       background: white;
-      border: 2px solid #a52900;
+      border: 2px solid var(--accent);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -224,22 +294,27 @@
       cursor: pointer;
       transition: all 0.3s ease;
       z-index: 10;
-      color: #a52900;
+      color: var(--accent);
     }
+
     .carousel-btn:hover {
-      background: #a52900;
+      background: var(--accent);
       color: white;
+      transform: translateY(-50%) scale(1.08);
     }
+
     .carousel-btn.prev { left: 12px; }
     .carousel-btn.next { right: 12px; }
-    
-    /* Masonry */
+
+    /* === SECTION 4: MASONRY === */
     .masonry-grid {
       column-count: 3;
       column-gap: 24px;
     }
+
     @media (max-width: 1024px) { .masonry-grid { column-count: 2; } }
     @media (max-width: 640px) { .masonry-grid { column-count: 1; } }
+
     .masonry-item {
       break-inside: avoid;
       margin-bottom: 24px;
@@ -248,20 +323,25 @@
       border-radius: 16px;
       cursor: pointer;
       background: white;
-      border: 1px solid #e8e8e8;
+      border: 1px solid var(--border);
       transition: all 0.4s ease;
     }
+
     .masonry-item:hover {
       transform: translateY(-6px);
       box-shadow: 0 24px 48px rgba(0,0,0,0.08);
     }
+
     .masonry-item img {
       width: 100%;
       display: block;
       transition: transform 0.6s ease;
       object-fit: contain;
+      background: #fafafa;
     }
+
     .masonry-item:hover img { transform: scale(1.06); }
+
     .masonry-overlay {
       position: absolute;
       inset: 0;
@@ -273,25 +353,28 @@
       opacity: 0;
       transition: opacity 0.35s ease;
     }
+
     .masonry-item:hover .masonry-overlay { opacity: 1; }
-    
-    /* List */
+
+    /* === SECTION 5: LIST === */
     .list-item {
       display: flex;
       align-items: center;
       gap: 20px;
       padding: 22px 26px;
       background: white;
-      border: 1px solid #e8e8e8;
+      border: 1px solid var(--border);
       border-radius: 16px;
       cursor: pointer;
       transition: all 0.35s ease;
     }
+
     .list-item:hover {
-      border-color: #a52900;
+      border-color: var(--accent);
       transform: translateX(10px);
       box-shadow: 0 12px 36px rgba(165,41,0,0.08);
     }
+
     .list-icon {
       width: 56px;
       height: 56px;
@@ -301,76 +384,15 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      color: #a52900;
+      color: var(--accent);
       transition: all 0.3s ease;
     }
+
     .list-item:hover .list-icon {
-      background: #a52900;
+      background: var(--accent);
       color: white;
     }
-    
-    /* Reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(60px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-    .reveal.active { opacity: 1; transform: translateY(0); }
-    
-    /* Hero */
-    .hero-1, .hero-2, .hero-3, .hero-4 {
-      opacity: 0;
-      animation: heroIn 1s ease forwards;
-    }
-    .hero-1 { animation-delay: 0.1s; }
-    .hero-2 { animation-delay: 0.3s; }
-    .hero-3 { animation-delay: 0.5s; }
-    .hero-4 { animation-delay: 0.7s; }
-    @keyframes heroIn {
-      from { opacity: 0; transform: translateY(45px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* Buttons */
-    .btn-primary {
-      background: #a52900;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.18), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.6s ease;
-    }
-    .btn-primary:hover::before { transform: translateX(100%); }
-    .btn-primary:hover { background: #c43c12; transform: translateY(-2px); }
-    .btn-outline {
-      border: 2px solid #a52900;
-      color: #a52900;
-    }
-    .btn-outline:hover {
-      background: #a52900;
-      color: white;
-    }
-    
-    /* Section Label */
-    .section-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 20px;
-      background: rgba(165,41,0,0.06);
-      border-radius: 100px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #a52900;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-    }
-    
+
     /* Modal */
     .modal-overlay {
       position: fixed;
@@ -384,7 +406,12 @@
       visibility: hidden;
       transition: all 0.35s ease;
     }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
     .modal-content {
       max-width: 92vw;
       max-height: 92vh;
@@ -392,13 +419,19 @@
       transform: scale(0.92);
       transition: transform 0.35s ease;
     }
-    .modal-overlay.active .modal-content { transform: scale(1); }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+
     .modal-content img {
       max-width: 100%;
       max-height: 78vh;
       border-radius: 16px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
       object-fit: contain;
     }
+
     .modal-close {
       position: absolute;
       top: 24px;
@@ -411,8 +444,75 @@
       border-radius: 50%;
       transition: all 0.3s ease;
     }
-    .modal-close:hover { background: rgba(255,255,255,0.2); }
-    
+
+    .modal-close:hover {
+      background: rgba(255,255,255,0.2);
+      transform: rotate(90deg);
+    }
+
+    /* Hero Animations */
+    .hero-1 { opacity: 0; animation: heroIn 1s ease forwards 0.1s; }
+    .hero-2 { opacity: 0; animation: heroIn 1s ease forwards 0.3s; }
+    .hero-3 { opacity: 0; animation: heroIn 1s ease forwards 0.5s; }
+    .hero-4 { opacity: 0; animation: heroIn 1s ease forwards 0.7s; }
+
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(45px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.18), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .btn-primary:hover::before { transform: translateX(100%); }
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Section Label */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      background: rgba(165,41,0,0.06);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    /* Accent Line */
+    .accent-line {
+      width: 50px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
     /* Floating WhatsApp */
     .float-wa {
       position: fixed;
@@ -420,7 +520,7 @@
       right: 28px;
       width: 64px;
       height: 64px;
-      background: #a52900;
+      background: var(--accent);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -428,29 +528,68 @@
       box-shadow: 0 8px 32px rgba(165,41,0,0.4);
       z-index: 100;
       transition: all 0.3s ease;
+      animation: floatPulse 3s ease-in-out infinite;
     }
-    .float-wa:hover { transform: scale(1.1); }
-    
+
+    .float-wa:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 48px rgba(165,41,0,0.5);
+    }
+
+    @keyframes floatPulse {
+      0%, 100% { box-shadow: 0 8px 32px rgba(165,41,0,0.4); }
+      50% { box-shadow: 0 8px 48px rgba(165,41,0,0.55), 0 0 0 12px rgba(165,41,0,0.08); }
+    }
+
+    /* Focus States */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    /* Hero Background */
+    .hero-bg {
+      background: 
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(165,41,0,0.03) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 60% at 20% 80%, rgba(165,41,0,0.025) 0%, transparent 50%),
+        linear-gradient(180deg, #FFFFFF 0%, #fafafa 100%);
+    }
+
     /* Click indicator */
     .click-indicator {
       position: absolute;
       top: 16px;
       right: 16px;
-      background: #a52900;
+      background: var(--accent);
       color: white;
       padding: 6px 12px;
       border-radius: 20px;
       font-size: 10px;
       font-weight: 600;
       text-transform: uppercase;
+      letter-spacing: 0.05em;
       opacity: 0;
       transition: opacity 0.3s ease;
       z-index: 10;
     }
+
     .slide-card:hover .click-indicator,
     .grid-card:hover .click-indicator,
     .carousel-card:hover .click-indicator,
-    .masonry-item:hover .click-indicator { opacity: 1; }
+    .masonry-item:hover .click-indicator,
+    .list-item:hover .click-indicator {
+      opacity: 1;
+    }
+
+    /* Image Fallback */
+    .img-fallback {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #fafafa 0%, #f0f0f0 100%);
+      color: var(--muted);
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
@@ -459,12 +598,13 @@
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
     <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
       <a href="#" class="flex items-center gap-4">
-        <div id="logoContainer" class="img-container logo-img rounded-lg" style="width: 50px; height: 50px;">
-          <!-- Logo cargado dinámicamente -->
-        </div>
+        <!-- LOGO PRINCIPAL -->
+        <img src="https://drive.google.com/uc?export=view&id=18Gy-RI1tCiwAgUxcxDqzu6G1LCJHAelg" 
+             alt="Logo Isaid López Martínez" 
+             class="logo-img">
         <div class="hidden sm:block">
           <p class="font-semibold text-charcoal text-sm">Isaid López Martínez</p>
-          <p class="text-xs text-muted">Evaluador EMA</p>
+          <p class="text-xs text-muted tracking-wide">Evaluador EMA</p>
         </div>
       </a>
       
@@ -474,7 +614,7 @@
           <a href="#metrologia" class="text-sm font-medium text-muted hover:text-rust transition-colors">Metrología</a>
           <a href="#infraestructura" class="text-sm font-medium text-muted hover:text-rust transition-colors">Infraestructura</a>
           <a href="#geotecnia" class="text-sm font-medium text-muted hover:text-rust transition-colors">Geotecnia</a>
-          <a href="#software" class="text-sm font-medium text-muted hover:text-rust transition-colors">Software</a>
+          <a href="#normativa" class="text-sm font-medium text-muted hover:text-rust transition-colors">Formación</a>
         </div>
         
         <div class="spider-wrap flex items-center gap-2">
@@ -488,31 +628,34 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="min-h-screen flex items-center pt-24 pb-20 px-6" style="background: linear-gradient(180deg, #fff 0%, #fafafa 100%);">
+  <!-- Hero Banner -->
+  <header class="hero-bg min-h-screen flex items-center pt-24 pb-20 px-6">
     <div class="max-w-7xl mx-auto w-full">
       <div class="max-w-4xl">
         <div class="hero-1 flex items-center gap-4 mb-8">
-          <div class="w-12 h-0.5 bg-rust"></div>
+          <div class="accent-line"></div>
           <span class="section-label">Ingeniero Civil Senior</span>
         </div>
         
-        <h1 class="hero-2 font-display text-5xl sm:text-6xl lg:text-7xl text-charcoal leading-tight mb-6">
+        <h1 class="hero-2 font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-charcoal leading-[0.95] mb-6">
           Ing. Isaid López Martínez
         </h1>
         
         <p class="hero-3 text-xl sm:text-2xl text-muted leading-relaxed mb-8 max-w-2xl">
-          Evaluador EMA | Especialista en Gestión de Calidad 17025 | 12 Años de Trayectoria
+          Evaluador EMA <span class="text-rust">|</span> Especialista en Gestión de Calidad 17025 <span class="text-rust">|</span> 12 Años de Trayectoria
         </p>
         
         <div class="hero-4 flex flex-col sm:flex-row gap-4">
-          <a href="https://wa.me/529512042468" target="_blank" class="btn-primary inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-white font-medium">
+          <a href="https://wa.me/529512042468" target="_blank" rel="noopener" 
+             class="btn-primary inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-white font-medium text-base transition-all">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
             Contactar por WhatsApp
           </a>
-          <a href="mailto:ing.isaid.lopez@gmail.com" class="btn-outline inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-medium bg-white">
+          
+          <a href="mailto:ing.isaid.lopez@gmail.com" 
+             class="btn-outline inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-medium text-base bg-white transition-all">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
             </svg>
@@ -521,177 +664,529 @@
         </div>
       </div>
       
-      <div class="mt-24 pt-12 border-t border-gray-200 flex flex-wrap gap-12">
+      <!-- Stats -->
+      <div class="mt-24 pt-12 border-t border-border/60 flex flex-wrap gap-12 md:gap-20">
         <div>
-          <p class="font-display text-5xl text-rust">50</p>
-          <p class="text-sm text-muted mt-2">Documentos</p>
+          <p class="font-display text-5xl sm:text-6xl text-rust">50</p>
+          <p class="text-sm text-muted mt-2 tracking-wide">Documentos Certificados</p>
         </div>
         <div>
-          <p class="font-display text-5xl text-rust">12+</p>
-          <p class="text-sm text-muted mt-2">Años</p>
+          <p class="font-display text-5xl sm:text-6xl text-rust">12+</p>
+          <p class="text-sm text-muted mt-2 tracking-wide">Años de Experiencia</p>
         </div>
         <div>
-          <p class="font-display text-5xl text-rust">EMA</p>
-          <p class="text-sm text-muted mt-2">Evaluador</p>
+          <p class="font-display text-5xl sm:text-6xl text-rust">EMA</p>
+          <p class="text-sm text-muted mt-2 tracking-wide">Evaluador Acreditado</p>
         </div>
         <div>
-          <p class="font-display text-5xl text-rust">ISO</p>
-          <p class="text-sm text-muted mt-2">17025</p>
+          <p class="font-display text-5xl sm:text-6xl text-rust">ISO</p>
+          <p class="text-sm text-muted mt-2 tracking-wide">17025 Especialista</p>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Sections -->
+  <!-- SECTION 1: Infinite Slider -->
   <section id="alta-direccion" class="py-28 px-6">
     <div class="max-w-7xl mx-auto mb-16 reveal">
-      <div class="section-label mb-6"><span class="w-2 h-2 bg-rust rounded-full"></span> Sección 1 de 5</div>
-      <h2 class="font-display text-3xl sm:text-4xl text-charcoal mb-4">Alta Dirección y Acreditación Maestra</h2>
-      <p class="text-muted text-lg">Certificaciones EMA, INFE, MAAC y reconocimientos de alto nivel.</p>
+      <div class="section-label mb-6">
+        <span class="w-2 h-2 bg-rust rounded-full"></span>
+        Sección 1 de 5
+      </div>
+      <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Alta Dirección y Acreditación Maestra</h2>
+      <p class="text-muted text-lg max-w-2xl">Las 10 certificaciones más prestigiadas: EMA, INFE, MAAC y reconocimientos de alto nivel.</p>
     </div>
-    <div class="slider-container reveal"><div class="slider-track" id="sliderTrack"></div></div>
+    
+    <div class="slider-container reveal" style="transition-delay: 0.15s;">
+      <div class="slider-track" id="sliderTrack"></div>
+    </div>
   </section>
 
-  <section id="metrologia" class="py-28 px-6 bg-gray-50">
+  <!-- SECTION 2: 2-Column Grid -->
+  <section id="metrologia" class="py-28 px-6 bg-surface">
     <div class="max-w-7xl mx-auto">
       <div class="mb-16 reveal">
-        <div class="section-label mb-6"><span class="w-2 h-2 bg-rust rounded-full"></span> Sección 2 de 5</div>
-        <h2 class="font-display text-3xl sm:text-4xl text-charcoal mb-4">Metrología y Control de Calidad</h2>
-        <p class="text-muted text-lg">Calibración, trazabilidad y aseguramiento de calidad.</p>
+        <div class="section-label mb-6">
+          <span class="w-2 h-2 bg-rust rounded-full"></span>
+          Sección 2 de 5
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Metrología y Control de Calidad</h2>
+        <p class="text-muted text-lg max-w-2xl">Calibración, trazabilidad metrológica y sistemas de aseguramiento de calidad.</p>
       </div>
-      <div class="grid-2col reveal" id="gridContainer"></div>
+      
+      <div class="grid-2col reveal" style="transition-delay: 0.15s;" id="gridContainer"></div>
     </div>
   </section>
 
+  <!-- SECTION 3: Carousel - INFRAESTRUCTURA VIAL -->
   <section id="infraestructura" class="py-28 px-6">
     <div class="max-w-7xl mx-auto">
       <div class="mb-16 reveal">
-        <div class="section-label mb-6"><span class="w-2 h-2 bg-rust rounded-full"></span> Sección 3 de 5</div>
-        <h2 class="font-display text-3xl sm:text-4xl text-charcoal mb-4">Infraestructura Vial y Congresos</h2>
-        <p class="text-muted text-lg">Pavimentos, ingeniería vial y congresos técnicos.</p>
+        <div class="section-label mb-6">
+          <span class="w-2 h-2 bg-rust rounded-full"></span>
+          Sección 3 de 5
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Infraestructura Vial y Congresos</h2>
+        <p class="text-muted text-lg max-w-2xl">Diseño de pavimentos, ingeniería vial y participación en congresos técnicos.</p>
       </div>
-      <div class="carousel-wrapper reveal">
-        <button class="carousel-btn prev" id="prevBtn">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      
+      <div class="carousel-wrapper reveal" style="transition-delay: 0.15s;">
+        <button class="carousel-btn prev" id="prevBtn" aria-label="Anterior">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
         </button>
+        
         <div class="carousel-track" id="carouselTrack"></div>
-        <button class="carousel-btn next" id="nextBtn">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        
+        <button class="carousel-btn next" id="nextBtn" aria-label="Siguiente">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
         </button>
       </div>
     </div>
   </section>
 
-  <section id="geotecnia" class="py-28 px-6 bg-gray-50">
+  <!-- SECTION 4: Masonry Gallery - GEOTECNIA -->
+  <section id="geotecnia" class="py-28 px-6 bg-surface">
     <div class="max-w-7xl mx-auto">
       <div class="mb-16 reveal">
-        <div class="section-label mb-6"><span class="w-2 h-2 bg-rust rounded-full"></span> Sección 4 de 5</div>
-        <h2 class="font-display text-3xl sm:text-4xl text-charcoal mb-4">Geotecnia y Tecnología del Concreto</h2>
-        <p class="text-muted text-lg">Mecánica de suelos y diseño de mezclas.</p>
+        <div class="section-label mb-6">
+          <span class="w-2 h-2 bg-rust rounded-full"></span>
+          Sección 4 de 5
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Geotecnia y Tecnología del Concreto</h2>
+        <p class="text-muted text-lg max-w-2xl">Mecánica de suelos, diseño de mezclas y ensayos especializados.</p>
       </div>
-      <div class="masonry-grid reveal" id="masonryContainer"></div>
+      
+      <div class="masonry-grid reveal" style="transition-delay: 0.15s;" id="masonryContainer"></div>
     </div>
   </section>
 
-  <section id="software" class="py-28 px-6">
+  <!-- SECTION 5: List - NORMATIVA Y FORMACIÓN -->
+  <section id="normativa" class="py-28 px-6">
     <div class="max-w-4xl mx-auto">
       <div class="mb-16 reveal">
-        <div class="section-label mb-6"><span class="w-2 h-2 bg-rust rounded-full"></span> Sección 5 de 5</div>
-        <h2 class="font-display text-3xl sm:text-4xl text-charcoal mb-4">Software Core y Actualización</h2>
-        <p class="text-muted text-lg">Capacitación técnica y desarrollo profesional.</p>
+        <div class="section-label mb-6">
+          <span class="w-2 h-2 bg-rust rounded-full"></span>
+          Sección 5 de 5
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Normativa y Formación Profesional</h2>
+        <p class="text-muted text-lg max-w-2xl">Capacitación técnica, software especializado y actualización profesional continua.</p>
       </div>
-      <div class="flex flex-col gap-5 reveal" id="listContainer"></div>
+      
+      <div class="flex flex-col gap-5 reveal" style="transition-delay: 0.15s;" id="listContainer"></div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer id="contacto" class="py-20 px-6 border-t border-gray-200">
-    <div class="max-w-7xl mx-auto text-center">
-      <p class="font-semibold text-charcoal text-lg mb-2">Ing. Isaid López Martínez</p>
-      <p class="text-muted mb-6">951 204 24 68 | ing.isaid.lopez@gmail.com</p>
-      <p class="text-sm text-muted/60">2024 Todos los derechos reservados.</p>
+  <footer id="contacto" class="py-24 px-6 border-t border-border">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <div class="flex items-center gap-4 mb-8">
+            <img src="https://drive.google.com/uc?export=view&id=18Gy-RI1tCiwAgUxcxDqzu6G1LCJHAelg" 
+                 alt="Logo" class="h-14 w-auto">
+            <div>
+              <p class="font-semibold text-charcoal text-lg">Ing. Isaid López Martínez</p>
+              <p class="text-sm text-muted">Evaluador EMA & Especialista ISO 17025</p>
+            </div>
+          </div>
+          <p class="text-muted leading-relaxed mb-10 max-w-md text-lg">
+            Transformando normativas técnicas en eficiencia operativa para proyectos de infraestructura de alto impacto en México.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="https://wa.me/529512042468" target="_blank" rel="noopener" 
+               class="btn-primary px-8 py-4 rounded-xl text-white font-medium flex items-center gap-3">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              WhatsApp
+            </a>
+            <a href="mailto:ing.isaid.lopez@gmail.com" 
+               class="btn-outline px-8 py-4 rounded-xl font-medium flex items-center gap-3 bg-white">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              Email
+            </a>
+          </div>
+        </div>
+        
+        <div class="bg-surface rounded-2xl p-10 border border-border">
+          <h3 class="font-semibold text-charcoal text-lg mb-8">Información de Contacto</h3>
+          <div class="space-y-6">
+            <div class="flex items-center gap-5">
+              <div class="w-12 h-12 bg-rust/10 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs text-muted uppercase tracking-wide">Teléfono</p>
+                <p class="font-medium text-charcoal text-lg">951 204 24 68</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-5">
+              <div class="w-12 h-12 bg-rust/10 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs text-muted uppercase tracking-wide">Email</p>
+                <p class="font-medium text-charcoal text-lg">ing.isaid.lopez@gmail.com</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-5">
+              <div class="w-12 h-12 bg-rust/10 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs text-muted uppercase tracking-wide">Ubicación</p>
+                <p class="font-medium text-charcoal text-lg">Oaxaca de Juárez, México</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-20 pt-10 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-6">
+        <p class="text-sm text-muted">2024 Ing. Isaid López Martínez. Todos los derechos reservados.</p>
+        <p class="text-xs text-muted/60 tracking-wide">Portafolio de 50 Certificaciones Profesionales</p>
+      </div>
     </div>
   </footer>
 
   <!-- Floating WhatsApp -->
-  <a href="https://wa.me/529512042468" target="_blank" class="float-wa">
+  <a href="https://wa.me/529512042468" target="_blank" rel="noopener" class="float-wa" aria-label="WhatsApp">
     <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
   </a>
 
   <!-- Modal -->
-  <div class="modal-overlay" id="modal">
-    <button class="modal-close" id="modalClose">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  <div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
     </button>
     <div class="modal-content">
-      <img id="modalImg" src="" alt="">
+      <img id="modalImg" src="" alt="Documento">
       <h3 class="text-white font-display text-2xl mt-6" id="modalTitle"></h3>
       <p class="text-white/60 text-base mt-2" id="modalSubtitle"></p>
+      <a id="modalLink" href="" target="_blank" class="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-lg text-white text-sm transition-all">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+        </svg>
+        Abrir en Google Drive
+      </a>
     </div>
   </div>
 
   <script>
-    // =============================================
-    // IMAGE LOADER WITH MULTIPLE FALLBACKS
-    // =============================================
+    // ========================================
+    // DATOS CON ENLACES EXACTOS DEL USUARIO
+    // ========================================
     
-    // Drive IDs
-    const DRIVE_IDS = {
-      logo: '18Gy-RI1tCiwAgUxcxDqzu6G1LCJHAelg',
-      s1: ['1baO5-98aURbJnr6Rf_4DmexLfM4uelQs','1b5zvfjHUynR7USaB5OJHo-56XvuQV9rx','18n7oOsg4bWqG-pvTXm_wuiZwa6q2AlPE','1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_','18Tgc7dVblxrF4oqxRdaEKkLtAZRYMK10','1RRUJO17BfF0rQjkEMzOkJuXBmoiHCVis','13iUPpOYMDN48HN8Ui14ERakQFu3gQs_o','117dvHX2Df2vMlFT91OhMEJCLibxR3VVo','1iEf10-KYFXcunk_7J1XTeM5zydu-G8EW','1P2xFSpamzmIdosXrEG6rGRcVYEewzr51'],
-      s2: ['1yamFMOUjn5HG1oy__LrBJ_4k7p07jX8G','1w5MK3IWMZeoVIu3CVadlRZhGh6R9IsuO','1CX4ZeXdfVtP0aZ3_ypNFrtD2FeNO7FkE','15-soRYmoiHcSSE4Z7FEvFF_reWzYsKyX','1GbV-hxaqJwN3MIua9xJObsQsQODmIQ7r','1lhiqKc5_QoIR_8SA-0whfRmnQu1MsBtf','1piJ5jjPBavTAuk_uXW1VYcXpHpke8Lx8','1DdbLZZ7JFq-9j-p2df1c_GZl3hRSHGgZ','1EhYNdnJW1SvwEMI-f8p9bB__m4M3_QLj','13Lr82M3C3CiXJAVNzPxQyM8wZyNY5ZkR'],
-      s3: ['1sdvakvf_uA0vdyHXxWRGu8zyRbuCGVG-','1S2kUpSrFG2jUR9T5N25y4vXGPf7vSrwr','1vdgp-1SlO4OsoG3kBqTY8NX2oY6vAcRh','1-O7ZpAB-8nT-Er3AXgmaB6ymo9fmMCoR','1B8QVV0S0Bx2bZaepB6lDQADQAqw8igUb','1B8QVV0S0Bx2bZaepB6lDQADQAqw8igUb','1b-l6E1yeFQHXTuqzxXEMeT2DZ3E5XBjM','1r5SNMyJNgxUZoX_ATVmlyMQTcg76ZvjM','1G981oGfQ68BTs_wFdiJGKYNw8srkqDiU','1_h7Gl2IIfj6cGIip02tAnE_rDm6cntuF'],
-      s4: ['1z7DIjxcFqvyKK1aBwvJ-Xx_rglMbUUpg','1gg3flSsdDWPKmFguqAEC2jznRoFwfIxH','1yjexrxwG8ghMGzT9_JmcImY6V-50lCV5','1Ma33CPhwoFgVLBXHKtib87J0MKaCDCdW','1ssSn8RZ1AyVQkBOQFShlH2nB5V1_tcAL','1WJJJDqlP5aPkaFHxMII8OZe5aamYPjwR','1ja32u4ps2eGVRfA8_0p7NBkvquZYddFl','1wNcCkFFELKjwwYMAc2yjbyxCjtv81wYA','1R-6rKApWyCS7-SHnFX5JdnMVTtSd4B1S','1cxpCiuMoxa70OD4qcwSjlkkCIGvPesH1'],
-      s5: ['1AsKW9Sdr7AojTxEfH7ypcOeRBy23c9Bl','13HEeOb3LlBJZPYNrkBPCxNMU6Otuh2ML','1hDU0YQxXybuvuj9t9TekC1Am5nOdbcu7','1KoR3XBcNu1M7RFlskR_DOT8fqS_YuXE6','11LARqxRWW-GZ4TRNWXNIy060f8obsu_1','1YqaD48Hx0DyI0i4KigiGo9hPQfWyUAFi','1b0m3leL97d6LHggzavyBwT0Yn7GERhSu','1p4AGM9g03ayaex2JFvj-8eSuyP-6V6Z3','1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_','1DgMNbgREJKObmi26XkM5YE1L2gzJDKws']
-    };
+    // Sección 1: Alta Dirección (permanece igual con URLs placeholder funcionales)
+    const section1Docs = [
+      { id: 1, title: 'Constancia Calificación 95', subtitle: 'Evaluación de Competencia', cat: 'EMA', img: 'https://lh3.googleusercontent.com/u/0/d/1baO5-98aURbJnr6Rf_4DmexLfM4uelQs', link: 'https://drive.google.com/file/d/1baO5-98aURbJnr6Rf_4DmexLfM4uelQs/view' },
+      { id: 2, title: 'Diploma Administración Laboratorio', subtitle: 'Certificación EMA', cat: 'EMA', img: 'https://lh3.googleusercontent.com/u/0/d/1b5zvfjHUynR7USaB5OJHo-56XvuQV9rx', link: 'https://drive.google.com/file/d/1b5zvfjHUynR7USaB5OJHo-56XvuQV9rx/view' },
+      { id: 3, title: 'Formación Auditores Internos', subtitle: 'Laboratorio VIAJE', cat: 'AUDITORÍA', img: 'https://lh3.googleusercontent.com/u/0/d/18n7oOsg4bWqG-pvTXm_wuiZwa6q2AlPE', link: 'https://drive.google.com/file/d/18n7oOsg4bWqG-pvTXm_wuiZwa6q2AlPE/view' },
+      { id: 4, title: 'CV Isaid López Martínez', subtitle: 'Currículum Vitae', cat: 'CV', img: 'https://lh3.googleusercontent.com/u/0/d/1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_', link: 'https://drive.google.com/file/d/1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_/view' },
+      { id: 5, title: 'Aseguramiento de Calidad', subtitle: 'Querétaro', cat: 'CALIDAD', img: 'https://lh3.googleusercontent.com/u/0/d/18Tgc7dVblxrF4oqxRdaEKkLtAZRYMK10', link: 'https://drive.google.com/file/d/18Tgc7dVblxrF4oqxRdaEKkLtAZRYMK10/view' },
+      { id: 6, title: 'Aseguramiento de Calidad', subtitle: 'Puebla', cat: 'CALIDAD', img: 'https://lh3.googleusercontent.com/u/0/d/1RRUJO17BfF0rQjkEMzOkJuXBmoiHCVis', link: 'https://drive.google.com/file/d/1RRUJO17BfF0rQjkEMzOkJuXBmoiHCVis/view' },
+      { id: 7, title: 'Requisitos Normativos 17025', subtitle: 'Capacitación', cat: 'NORMA', img: 'https://lh3.googleusercontent.com/u/0/d/13iUPpOYMDN48HN8Ui14ERakQFu3gQs_o', link: 'https://drive.google.com/file/d/13iUPpOYMDN48HN8Ui14ERakQFu3gQs_o/view' },
+      { id: 8, title: 'Criterios de Aplicación EMA', subtitle: 'Procedimientos', cat: 'EMA', img: 'https://lh3.googleusercontent.com/u/0/d/117dvHX2Df2vMlFT91OhMEJCLibxR3VVo', link: 'https://drive.google.com/file/d/117dvHX2Df2vMlFT91OhMEJCLibxR3VVo/view' },
+      { id: 9, title: 'Anexo Criterios Técnicos', subtitle: 'Documentación', cat: 'TÉCNICO', img: 'https://lh3.googleusercontent.com/u/0/d/1iEf10-KYFXcunk_7J1XTeM5zydu-G8EW', link: 'https://drive.google.com/file/d/1iEf10-KYFXcunk_7J1XTeM5zydu-G8EW/view' },
+      { id: 10, title: 'Políticas de Trazabilidad', subtitle: 'Directrices', cat: 'METROLOGÍA', img: 'https://lh3.googleusercontent.com/u/0/d/1P2xFSpamzmIdosXrEG6rGRcVYEewzr51', link: 'https://drive.google.com/file/d/1P2xFSpamzmIdosXrEG6rGRcVYEewzr51/view' }
+    ];
 
-    const TITLES = {
-      s1: ['Constancia 95','Diploma Lab','Auditores','CV','Calidad QRO','Calidad PUE','Normativos','Criterios','Anexo','Trazabilidad'],
-      s2: ['Calibración','Incertidumbre','Auditoría','Validación','Aptitud','Documentos','Correctivas','SI','No Conformidades','Registros'],
-      s3: ['Congreso','Reunión EMA','Normativa','Asfálticos','Terracerías','Pétreos','Obra SCT','Supervisión','Protocolos','Seguridad'],
-      s4: ['Suelos','Concreto','Compresión','Exploración','ACI','Proctor','Carga','Durabilidad','Agregados','Fundación'],
-      s5: ['NeoData','AutoCAD','SAP2000','Excel','Webinar ISO','Curso EMA','Diplomado','Capacitación','Metrología','Actualización']
-    };
+    const section2Docs = [
+      { id: 11, title: 'Calibración de Equipos', subtitle: 'Trazabilidad', cat: 'Metrología', img: 'https://lh3.googleusercontent.com/u/0/d/1yamFMOUjn5HG1oy__LrBJ_4k7p07jX8G' },
+      { id: 12, title: 'Análisis de Incertidumbre', subtitle: 'Estadística', cat: 'Calidad', img: 'https://lh3.googleusercontent.com/u/0/d/1w5MK3IWMZeoVIu3CVadlRZhGh6R9IsuO' },
+      { id: 13, title: 'Auditoría Interna ISO 17025', subtitle: 'Sistemas de Gestión', cat: 'Auditoría', img: 'https://lh3.googleusercontent.com/u/0/d/1CX4ZeXdfVtP0aZ3_ypNFrtD2FeNO7FkE' },
+      { id: 14, title: 'Validación de Métodos', subtitle: 'Verificación', cat: 'Métodos', img: 'https://lh3.googleusercontent.com/u/0/d/15-soRYmoiHcSSE4Z7FEvFF_reWzYsKyX' },
+      { id: 15, title: 'Ensayos de Aptitud', subtitle: 'Interlaboratorio', cat: 'Calidad', img: 'https://lh3.googleusercontent.com/u/0/d/1GbV-hxaqJwN3MIua9xJObsQsQODmIQ7r' },
+      { id: 16, title: 'Control de Documentos', subtitle: 'Gestión', cat: 'Gestión', img: 'https://lh3.googleusercontent.com/u/0/d/1lhiqKc5_QoIR_8SA-0whfRmnQu1MsBtf' },
+      { id: 17, title: 'Acciones Correctivas', subtitle: 'Mejora Continua', cat: 'Calidad', img: 'https://lh3.googleusercontent.com/u/0/d/1piJ5jjPBavTAuk_uXW1VYcXpHpke8Lx8' },
+      { id: 18, title: 'Trazabilidad SI', subtitle: 'Sistema Internacional', cat: 'Metrología', img: 'https://lh3.googleusercontent.com/u/0/d/1DdbLZZ7JFq-9j-p2df1c_GZl3hRSHGgZ' },
+      { id: 19, title: 'Gestión de No Conformidades', subtitle: 'Control', cat: 'Gestión', img: 'https://lh3.googleusercontent.com/u/0/d/1EhYNdnJW1SvwEMI-f8p9bB__m4M3_QLj' },
+      { id: 20, title: 'Registros Técnicos', subtitle: 'Documentación', cat: 'Documentación', img: 'https://lh3.googleusercontent.com/u/0/d/13Lr82M3C3CiXJAVNzPxQyM8wZyNY5ZkR' }
+    ];
 
-    // Generate multiple URL attempts for each image
-    function generateUrls(id) {
-      return [
-        // Attempt 1: wsrv.nl proxy
-        `https://wsrv.nl/?url=drive.google.com/uc?export=view&id=${id}&w=800`,
-        // Attempt 2: Google's lh3 direct format
-        `https://lh3.googleusercontent.com/d/${id}=w800`,
-        // Attempt 3: Direct uc link
-        `https://drive.google.com/uc?export=view&id=${id}`,
-        // Attempt 4: Another proxy
-        `https://images.weserv.nl/?url=drive.google.com/uc%3Fexport%3Dview%26id%3D${id}&w=800`,
-      ];
-    }
-
-    // Create smart image element with fallbacks
-    function createSmartImage(id, alt = '') {
-      const urls = generateUrls(id);
-      const img = document.createElement('img');
-      img.alt = alt;
-      img.style.cssText = 'width:100%;height:100%;object-fit:contain;';
-      
-      let attempt = 0;
-      
-      function tryLoad() {
-        if (attempt >= urls.length) {
-          img.src = `https://placehold.co/400x300/f0f0f0/888888?text=${encodeURIComponent(alt)}`;
-          return;
-        }
-        img.src = urls[attempt];
-        attempt++;
+    // ========================================
+    // SECCIÓN 3: INFRAESTRUCTURA VIAL - ENLACES EXACTOS
+    // ========================================
+    const section3Docs = [
+      { 
+        id: 21, 
+        title: 'Congreso Carreteras', 
+        subtitle: 'Participación Técnica', 
+        cat: 'Congreso',
+        link: 'https://drive.google.com/file/d/1sdvakvf_uA0vdyHXxWRGu8zyRbuCGVG-/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1sdvakvf_uA0vdyHXxWRGu8zyRbuCGVG-'
+      },
+      { 
+        id: 22, 
+        title: 'Reunión EMA', 
+        subtitle: 'Sesión de Evaluadores', 
+        cat: 'EMA',
+        link: 'https://drive.google.com/file/d/1S2kUpSrFG2jUR9T5N25y4vXGPf7vSrwr/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1S2kUpSrFG2jUR9T5N25y4vXGPf7vSrwr'
+      },
+      { 
+        id: 23, 
+        title: 'Normativa Transporte', 
+        subtitle: 'Regulaciones SCT', 
+        cat: 'Normativa',
+        link: 'https://drive.google.com/file/d/1vdgp-1SlO4OsoG3kBqTY8NX2oY6vAcRh/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1vdgp-1SlO4OsoG3kBqTY8NX2oY6vAcRh'
+      },
+      { 
+        id: 24, 
+        title: 'Materiales Asfálticos', 
+        subtitle: 'Especificaciones', 
+        cat: 'Materiales',
+        link: 'https://drive.google.com/file/d/1-O7ZpAB-8nT-Er3AXgmaB6ymo9fmMCoR/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1-O7ZpAB-8nT-Er3AXgmaB6ymo9fmMCoR'
+      },
+      { 
+        id: 25, 
+        title: 'Terracerías y Pavimentos', 
+        subtitle: 'Diseño Estructural', 
+        cat: 'Pavimentos',
+        link: 'https://drive.google.com/file/d/1B8QVV0S0Bx2bZaepB6lDQADQAqw8igUb/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1B8QVV0S0Bx2bZaepB6lDQADQAqw8igUb'
+      },
+      { 
+        id: 26, 
+        title: 'Calidad Obra SCT', 
+        subtitle: 'Supervisión', 
+        cat: 'Calidad',
+        link: 'https://drive.google.com/file/d/1b-l6E1yeFQHXTuqzxXEMeT2DZ3E5XBjM/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1b-l6E1yeFQHXTuqzxXEMeT2DZ3E5XBjM'
+      },
+      { 
+        id: 27, 
+        title: 'Control de Calidad', 
+        subtitle: 'Obra Pública', 
+        cat: 'Supervisión',
+        link: 'https://drive.google.com/file/d/1b-l6E1yeFQHXTuqzxXEMeT2DZ3E5XBjM/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1b-l6E1yeFQHXTuqzxXEMeT2DZ3E5XBjM'
+      },
+      { 
+        id: 28, 
+        title: 'Supervisión Técnica', 
+        subtitle: 'Control de Obra', 
+        cat: 'Supervisión',
+        link: 'https://drive.google.com/file/d/1r5SNMyJNgxUZoX_ATVmlyMQTcg76ZvjM/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1r5SNMyJNgxUZoX_ATVmlyMQTcg76ZvjM'
+      },
+      { 
+        id: 29, 
+        title: 'Protocolos Entrega', 
+        subtitle: 'Recepción', 
+        cat: 'Protocolos',
+        link: 'https://drive.google.com/file/d/1G981oGfQ68BTs_wFdiJGKYNw8srkqDiU/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1G981oGfQ68BTs_wFdiJGKYNw8srkqDiU'
+      },
+      { 
+        id: 30, 
+        title: 'Seguridad Vial', 
+        subtitle: 'Normatividad', 
+        cat: 'Seguridad',
+        link: 'https://drive.google.com/file/d/1_h7Gl2IIfj6cGIip02tAnE_rDm6cntuF/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1_h7Gl2IIfj6cGIip02tAnE_rDm6cntuF'
       }
-      
-      img.onerror = tryLoad;
-      tryLoad();
-      
-      return img;
-    }
+    ];
+
+    // ========================================
+    // SECCIÓN 4: GEOTECNIA Y CONCRETO - ENLACES EXACTOS
+    // ========================================
+    const section4Docs = [
+      { 
+        id: 31, 
+        title: 'Mecánica de Suelos', 
+        subtitle: 'Clasificación', 
+        h: 340,
+        link: 'https://drive.google.com/file/d/1z7DIjxcFqvyKK1aBwvJ-Xx_rglMbUUpg/view?usp=drive_link',
+        img: 'https://drive.google.com/uc?export=view&id=1z7DIjxcFqvyKK1aBwvJ-Xx_rglMbUUpg'
+      },
+      { 
+        id: 32, 
+        title: 'Tecnología del Concreto', 
+        subtitle: 'Diseño de Mezclas', 
+        h: 280,
+        link: 'https://drive.google.com/file/d/1gg3flSsdDWPKmFguqAEC2jznRoFwfIxH/view?usp=drive_link',
+        img: 'https://drive.google.com/uc?export=view&id=1gg3flSsdDWPKmFguqAEC2jznRoFwfIxH'
+      },
+      { 
+        id: 33, 
+        title: 'Ensayos de Compresión', 
+        subtitle: 'Probetas', 
+        h: 300,
+        link: 'https://drive.google.com/file/d/1yjexrxwG8ghMGzT9_JmcImY6V-50lCV5/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1yjexrxwG8ghMGzT9_JmcImY6V-50lCV5'
+      },
+      { 
+        id: 34, 
+        title: 'Exploración Geotécnica', 
+        subtitle: 'Sondeos', 
+        h: 380,
+        link: 'https://drive.google.com/file/d/1Ma33CPhwoFgVLBXHKtib87J0MKaCDCdW/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1Ma33CPhwoFgVLBXHKtib87J0MKaCDCdW'
+      },
+      { 
+        id: 35, 
+        title: 'Diseño de Mezclas ACI', 
+        subtitle: 'Método 211', 
+        h: 260,
+        link: 'https://drive.google.com/file/d/1ssSn8RZ1AyVQkBOQFShlH2nB5V1_tcAL/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1ssSn8RZ1AyVQkBOQFShlH2nB5V1_tcAL'
+      },
+      { 
+        id: 36, 
+        title: 'Compactación Proctor', 
+        subtitle: 'Densidad', 
+        h: 320,
+        link: 'https://drive.google.com/file/d/1WJJJDqlP5aPkaFHxMII8OZe5aamYPjwR/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1WJJJDqlP5aPkaFHxMII8OZe5aamYPjwR'
+      },
+      { 
+        id: 37, 
+        title: 'Pruebas de Carga', 
+        subtitle: 'Soporte', 
+        h: 290,
+        link: 'https://drive.google.com/file/d/1ja32u4ps2eGVRfA8_0p7NBkvquZYddFl/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1ja32u4ps2eGVRfA8_0p7NBkvquZYddFl'
+      },
+      { 
+        id: 38, 
+        title: 'Durabilidad del Concreto', 
+        subtitle: 'Ensayos', 
+        h: 350,
+        link: 'https://drive.google.com/file/d/1wNcCkFFELKjwwYMAc2yjbyxCjtv81wYA/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1wNcCkFFELKjwwYMAc2yjbyxCjtv81wYA'
+      },
+      { 
+        id: 39, 
+        title: 'Agregados Pétreos', 
+        subtitle: 'Caracterización', 
+        h: 270,
+        link: 'https://drive.google.com/file/d/1R-6rKApWyCS7-SHnFX5JdnMVTtSd4B1S/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1R-6rKApWyCS7-SHnFX5JdnMVTtSd4B1S'
+      },
+      { 
+        id: 40, 
+        title: 'Suelos de Fundación', 
+        subtitle: 'Análisis', 
+        h: 310,
+        link: 'https://drive.google.com/file/d/1cxpCiuMoxa70OD4qcwSjlkkCIGvPesH1/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1cxpCiuMoxa70OD4qcwSjlkkCIGvPesH1'
+      }
+    ];
+
+    // ========================================
+    // SECCIÓN 5: NORMATIVA Y FORMACIÓN - ENLACES EXACTOS
+    // ========================================
+    const section5Docs = [
+      { 
+        id: 41, 
+        title: 'NeoData Laboratory', 
+        subtitle: 'Gestión de Datos', 
+        type: 'software',
+        link: 'https://drive.google.com/file/d/1AsKW9Sdr7AojTxEfH7ypcOeRBy23c9Bl/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1AsKW9Sdr7AojTxEfH7ypcOeRBy23c9Bl'
+      },
+      { 
+        id: 42, 
+        title: 'AutoCAD Civil 3D', 
+        subtitle: 'Diseño', 
+        type: 'software',
+        link: 'https://drive.google.com/file/d/13HEeOb3LlBJZPYNrkBPCxNMU6Otuh2ML/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=13HEeOb3LlBJZPYNrkBPCxNMU6Otuh2ML'
+      },
+      { 
+        id: 43, 
+        title: 'SAP2000 Avanzado', 
+        subtitle: 'Análisis Estructural', 
+        type: 'software',
+        link: 'https://drive.google.com/file/d/1hDU0YQxXybuvuj9t9TekC1Am5nOdbcu7/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1hDU0YQxXybuvuj9t9TekC1Am5nOdbcu7'
+      },
+      { 
+        id: 44, 
+        title: 'Excel para Laboratorios', 
+        subtitle: 'Análisis de Datos', 
+        type: 'software',
+        link: 'https://drive.google.com/file/d/1KoR3XBcNu1M7RFlskR_DOT8fqS_YuXE6/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1KoR3XBcNu1M7RFlskR_DOT8fqS_YuXE6'
+      },
+      { 
+        id: 45, 
+        title: 'Webinar ISO 17025:2017', 
+        subtitle: 'Actualización Normativa', 
+        type: 'webinar',
+        link: 'https://drive.google.com/file/d/11LARqxRWW-GZ4TRNWXNIy060f8obsu_1/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=11LARqxRWW-GZ4TRNWXNIy060f8obsu_1'
+      },
+      { 
+        id: 46, 
+        title: 'Curso Virtual EMA', 
+        subtitle: 'Acreditación', 
+        type: 'curso',
+        link: 'https://drive.google.com/file/d/1YqaD48Hx0DyI0i4KigiGo9hPQfWyUAFi/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1YqaD48Hx0DyI0i4KigiGo9hPQfWyUAFi'
+      },
+      { 
+        id: 47, 
+        title: 'Diplomado en Línea', 
+        subtitle: 'Gestión de Calidad', 
+        type: 'diplomado',
+        link: 'https://drive.google.com/file/d/1b0m3leL97d6LHggzavyBwT0Yn7GERhSu/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1b0m3leL97d6LHggzavyBwT0Yn7GERhSu'
+      },
+      { 
+        id: 48, 
+        title: 'Capacitación NeoData', 
+        subtitle: 'Software de Laboratorio', 
+        type: 'software',
+        link: 'https://drive.google.com/file/d/1p4AGM9g03ayaex2JFvj-8eSuyP-6V6Z3/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1p4AGM9g03ayaex2JFvj-8eSuyP-6V6Z3'
+      },
+      { 
+        id: 49, 
+        title: 'Webinar Metrología', 
+        subtitle: 'Trazabilidad Metrológica', 
+        type: 'webinar',
+        link: 'https://drive.google.com/file/d/1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_'
+      },
+      { 
+        id: 50, 
+        title: 'Actualización Profesional', 
+        subtitle: 'Desarrollo Continuo', 
+        type: 'curso',
+        link: 'https://drive.google.com/file/d/1DgMNbgREJKObmi26XkM5YE1L2gzJDKws/view?usp=sharing',
+        img: 'https://drive.google.com/uc?export=view&id=1DgMNbgREJKObmi26XkM5YE1L2gzJDKws'
+      }
+    ];
+
+    const typeIcons = {
+      software: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>',
+      webinar: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>',
+      curso: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>',
+      diplomado: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>'
+    };
 
     // DOM Elements
     const navbar = document.getElementById('navbar');
@@ -699,6 +1194,7 @@
     const modalImg = document.getElementById('modalImg');
     const modalTitle = document.getElementById('modalTitle');
     const modalSubtitle = document.getElementById('modalSubtitle');
+    const modalLink = document.getElementById('modalLink');
     const modalClose = document.getElementById('modalClose');
     const sliderTrack = document.getElementById('sliderTrack');
     const gridContainer = document.getElementById('gridContainer');
@@ -707,125 +1203,104 @@
     const listContainer = document.getElementById('listContainer');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    const logoContainer = document.getElementById('logoContainer');
 
-    // Load Logo
-    logoContainer.appendChild(createSmartImage(DRIVE_IDS.logo, 'Logo'));
-
-    // Render Functions
+    // ========================================
+    // FUNCIONES DE RENDERIZADO
+    // ========================================
+    
     function renderSlider() {
-      const ids = [...DRIVE_IDS.s1, ...DRIVE_IDS.s1];
-      sliderTrack.innerHTML = ids.map((id, i) => {
-        const idx = i % 10;
-        return `
-          <div class="slide-card" onclick="openModal('${id}', '${TITLES.s1[idx]}')">
-            <span class="click-indicator">Ver</span>
-            <div class="img-container" style="height:300px;padding:28px;"></div>
-            <div class="p-6">
-              <span class="text-xs font-semibold text-rust uppercase">#${idx + 1}</span>
-              <h3 class="font-display text-xl text-charcoal mt-2">${TITLES.s1[idx]}</h3>
+      const items = [...section1Docs, ...section1Docs];
+      sliderTrack.innerHTML = items.map(c => `
+        <a href="${c.link}" target="_blank" class="slide-card">
+          <span class="click-indicator">Ver</span>
+          <img src="${c.img}" alt="${c.title}" onerror="this.src='https://placehold.co/400x300/f5f5f5/a52900?text=Doc+${c.id}'">
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-xs font-semibold text-rust uppercase">${c.cat}</span>
+              <span class="text-xs text-muted">#${c.id}</span>
             </div>
+            <h3 class="font-display text-xl text-charcoal">${c.title}</h3>
+            <p class="text-sm text-muted mt-2">${c.subtitle}</p>
           </div>
-        `;
-      }).join('');
-      
-      // Load images after render
-      setTimeout(() => {
-        document.querySelectorAll('.slide-card .img-container').forEach((el, i) => {
-          const idx = i % 10;
-          el.appendChild(createSmartImage(DRIVE_IDS.s1[idx], TITLES.s1[idx]));
-        });
-      }, 100);
+        </a>
+      `).join('');
     }
 
     function renderGrid() {
-      gridContainer.innerHTML = DRIVE_IDS.s2.map((id, i) => `
-        <div class="grid-card" onclick="openModal('${id}', '${TITLES.s2[i]}')">
+      gridContainer.innerHTML = section2Docs.map(c => `
+        <div class="grid-card" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}', '')">
           <span class="click-indicator">Ver</span>
-          <div class="img-container" style="height:380px;"></div>
+          <img src="${c.img}" alt="${c.title}" onerror="this.src='https://placehold.co/400x380/f5f5f5/a52900?text=Doc+${c.id}'">
           <div class="grid-overlay">
-            <h3 class="font-display text-2xl text-white">${TITLES.s2[i]}</h3>
-            <p class="text-sm text-white/80">#${i + 11}</p>
+            <span class="text-xs text-white/70 mb-2">#${c.id} - ${c.cat}</span>
+            <h3 class="font-display text-2xl text-white">${c.title}</h3>
+            <p class="text-sm text-white/80">${c.subtitle}</p>
           </div>
         </div>
       `).join('');
-      
-      setTimeout(() => {
-        document.querySelectorAll('.grid-card .img-container').forEach((el, i) => {
-          el.appendChild(createSmartImage(DRIVE_IDS.s2[i], TITLES.s2[i]));
-        });
-      }, 100);
     }
 
+    // SECCIÓN 3: CAROUSEL - CON ENLACES EXACTOS
     function renderCarousel() {
-      carouselTrack.innerHTML = DRIVE_IDS.s3.map((id, i) => `
-        <div class="carousel-card" onclick="openModal('${id}', '${TITLES.s3[i]}')">
+      carouselTrack.innerHTML = section3Docs.map(c => `
+        <div class="carousel-card" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}', '${c.link}')">
           <span class="click-indicator">Ver</span>
-          <div class="img-container" style="height:240px;padding:20px;"></div>
+          <img src="${c.img}" alt="${c.title}" onerror="this.src='https://placehold.co/320x240/f5f5f5/a52900?text=Doc+${c.id}'">
           <div class="p-5">
-            <span class="text-xs font-semibold text-rust">#${i + 21}</span>
-            <h3 class="font-medium text-charcoal mt-2">${TITLES.s3[i]}</h3>
+            <span class="text-xs font-semibold text-rust">#${c.id}</span>
+            <h3 class="font-medium text-charcoal mt-2">${c.title}</h3>
+            <p class="text-sm text-muted mt-1">${c.subtitle}</p>
           </div>
         </div>
       `).join('');
-      
-      setTimeout(() => {
-        document.querySelectorAll('.carousel-card .img-container').forEach((el, i) => {
-          el.appendChild(createSmartImage(DRIVE_IDS.s3[i], TITLES.s3[i]));
-        });
-      }, 100);
     }
 
+    // SECCIÓN 4: MASONRY - CON ENLACES EXACTOS
     function renderMasonry() {
-      const heights = [340,280,300,380,260,320,290,350,270,310];
-      masonryContainer.innerHTML = DRIVE_IDS.s4.map((id, i) => `
-        <div class="masonry-item" onclick="openModal('${id}', '${TITLES.s4[i]}')">
+      masonryContainer.innerHTML = section4Docs.map(c => `
+        <div class="masonry-item" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}', '${c.link}')">
           <span class="click-indicator">Ver</span>
-          <div class="img-container" style="height:${heights[i]}px;"></div>
+          <img src="${c.img}" style="height: ${c.h}px;" alt="${c.title}" onerror="this.src='https://placehold.co/400x${c.h}/f5f5f5/a52900?text=Doc+${c.id}'">
           <div class="masonry-overlay">
-            <p class="text-white font-display text-xl">${TITLES.s4[i]}</p>
-            <p class="text-rust text-xs mt-2">#${i + 31}</p>
+            <p class="text-white font-display text-xl">${c.title}</p>
+            <p class="text-white/70 text-sm mt-1">${c.subtitle}</p>
+            <p class="text-rust text-xs mt-3 font-semibold">#${c.id}</p>
           </div>
         </div>
       `).join('');
-      
-      setTimeout(() => {
-        document.querySelectorAll('.masonry-item .img-container').forEach((el, i) => {
-          el.appendChild(createSmartImage(DRIVE_IDS.s4[i], TITLES.s4[i]));
-        });
-      }, 100);
     }
 
+    // SECCIÓN 5: LIST - CON ENLACES EXACTOS
     function renderList() {
-      const icons = {
-        software: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>',
-        webinar: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>',
-        curso: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>',
-        diplomado: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>'
-      };
-      const types = ['software','software','software','software','webinar','curso','diplomado','software','webinar','curso'];
-      
-      listContainer.innerHTML = DRIVE_IDS.s5.map((id, i) => `
-        <div class="list-item" onclick="openModal('${id}', '${TITLES.s5[i]}')">
+      listContainer.innerHTML = section5Docs.map(c => `
+        <div class="list-item" onclick="openModal('${c.img}', '${c.title}', '${c.subtitle}', '${c.link}')">
           <span class="click-indicator">Ver</span>
-          <div class="list-icon">${icons[types[i]]}</div>
+          <div class="list-icon">${typeIcons[c.type]}</div>
           <div class="flex-1">
-            <span class="text-xs text-muted">#${i + 41}</span>
-            <h3 class="font-semibold text-charcoal">${TITLES.s5[i]}</h3>
+            <span class="text-xs text-muted font-medium">#${c.id}</span>
+            <h3 class="font-semibold text-charcoal text-lg">${c.title}</h3>
+            <p class="text-sm text-muted">${c.subtitle}</p>
           </div>
-          <svg class="w-5 h-5 text-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          <svg class="w-5 h-5 text-rust flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+          </svg>
         </div>
       `).join('');
     }
 
-    // Modal
-    window.openModal = function(id, title) {
-      modalImg.innerHTML = '';
-      modalImg.appendChild(createSmartImage(id, title));
+    // ========================================
+    // MODAL - CON ENLACE A GOOGLE DRIVE
+    // ========================================
+    function openModal(imgUrl, title, subtitle, driveLink) {
+      modalImg.src = imgUrl;
+      modalImg.alt = title;
       modalTitle.textContent = title;
+      modalSubtitle.textContent = subtitle;
+      modalLink.href = driveLink || '#';
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
-    };
+    }
 
     function closeModal() {
       modal.classList.remove('active');
@@ -833,57 +1308,103 @@
     }
 
     modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', e => e.target === modal && closeModal());
-    document.addEventListener('keydown', e => e.key === 'Escape' && closeModal());
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    // Carousel Nav
-    let cPos = 0;
-    const cWidth = 344;
+    // ========================================
+    // CAROUSEL NAVIGATION
+    // ========================================
+    let carouselPos = 0;
+    const cardWidth = 344;
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
 
     prevBtn.addEventListener('click', () => {
-      cPos = Math.min(cPos + cWidth, 0);
-      carouselTrack.style.transform = `translateX(${cPos}px)`;
+      carouselPos = Math.min(carouselPos + cardWidth, 0);
+      carouselTrack.style.transform = `translateX(${carouselPos}px)`;
     });
 
     nextBtn.addEventListener('click', () => {
-      const max = -(10 * cWidth - window.innerWidth + 160);
-      cPos = Math.max(cPos - cWidth, max);
-      carouselTrack.style.transform = `translateX(${cPos}px)`;
+      const maxScroll = -(section3Docs.length * cardWidth - window.innerWidth + 160);
+      carouselPos = Math.max(carouselPos - cardWidth, maxScroll);
+      carouselTrack.style.transform = `translateX(${carouselPos}px)`;
     });
 
-    // Touch
-    let dragging = false, startX = 0, scrollL = 0;
-    
-    carouselTrack.addEventListener('touchstart', e => {
-      dragging = true;
+    // Touch/Mouse drag
+    carouselTrack.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      carouselTrack.classList.add('dragging');
+      startX = e.pageX - carouselTrack.offsetLeft;
+      scrollLeft = carouselPos;
+    });
+
+    carouselTrack.addEventListener('mouseleave', () => {
+      isDragging = false;
+      carouselTrack.classList.remove('dragging');
+    });
+
+    carouselTrack.addEventListener('mouseup', () => {
+      isDragging = false;
+      carouselTrack.classList.remove('dragging');
+      carouselPos = Math.round(carouselPos / cardWidth) * cardWidth;
+      const maxScroll = -(section3Docs.length * cardWidth - window.innerWidth + 160);
+      carouselPos = Math.max(carouselPos, maxScroll);
+      carouselPos = Math.min(carouselPos, 0);
+      carouselTrack.style.transition = 'transform 0.3s ease';
+      carouselTrack.style.transform = `translateX(${carouselPos}px)`;
+    });
+
+    carouselTrack.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - carouselTrack.offsetLeft;
+      carouselPos = scrollLeft + (x - startX);
+      carouselTrack.style.transition = 'none';
+      carouselTrack.style.transform = `translateX(${carouselPos}px)`;
+    });
+
+    // Touch events
+    carouselTrack.addEventListener('touchstart', (e) => {
+      isDragging = true;
       startX = e.touches[0].pageX - carouselTrack.offsetLeft;
-      scrollL = cPos;
-    });
-    
-    carouselTrack.addEventListener('touchend', () => {
-      dragging = false;
-      cPos = Math.round(cPos / cWidth) * cWidth;
-      carouselTrack.style.transform = `translateX(${cPos}px)`;
-    });
-    
-    carouselTrack.addEventListener('touchmove', e => {
-      if (!dragging) return;
-      const x = e.touches[0].pageX - carouselTrack.offsetLeft;
-      cPos = scrollL + (x - startX);
-      carouselTrack.style.transform = `translateX(${cPos}px)`;
+      scrollLeft = carouselPos;
     });
 
-    // Nav scroll
+    carouselTrack.addEventListener('touchend', () => {
+      isDragging = false;
+      carouselPos = Math.round(carouselPos / cardWidth) * cardWidth;
+      const maxScroll = -(section3Docs.length * cardWidth - window.innerWidth + 160);
+      carouselPos = Math.max(carouselPos, maxScroll);
+      carouselPos = Math.min(carouselPos, 0);
+      carouselTrack.style.transition = 'transform 0.3s ease';
+      carouselTrack.style.transform = `translateX(${carouselPos}px)`;
+    });
+
+    carouselTrack.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const x = e.touches[0].pageX - carouselTrack.offsetLeft;
+      carouselPos = scrollLeft + (x - startX);
+      carouselTrack.style.transition = 'none';
+      carouselTrack.style.transform = `translateX(${carouselPos}px)`;
+    });
+
+    // ========================================
+    // SCROLL & REVEAL
+    // ========================================
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('nav-solid', window.pageYOffset > 80);
     }, { passive: true });
 
-    // Reveal
-    new IntersectionObserver(entries => {
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(e => e.isIntersecting && e.target.classList.add('active'));
-    }, { threshold: 0.1 }).observe(document.querySelectorAll('.reveal').forEach(el => el));
+    }, { threshold: 0.08 });
 
-    // Init
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ========================================
+    // INICIALIZACIÓN
+    // ========================================
     renderSlider();
     renderGrid();
     renderCarousel();
