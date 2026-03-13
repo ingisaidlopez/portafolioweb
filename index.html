@@ -68,14 +68,14 @@
       box-shadow: 0 1px 40px rgba(0,0,0,0.04);
     }
 
-    /* Spider Tooltip - Corregido para aparecer hacia abajo */
+    /* Spider Tooltip - Aparece hacia abajo */
     .spider-wrap { position: relative; }
 
     .spider-tooltip {
       position: absolute;
-      top: calc(100% + 14px); /* Aparece abajo del icono */
+      top: calc(100% + 14px);
       left: 50%;
-      transform: translateX(-50%) translateY(-10px); /* Animación de entrada */
+      transform: translateX(-50%) translateY(-10px);
       background: #0f0f0f;
       color: white;
       padding: 12px 18px;
@@ -91,21 +91,20 @@
       letter-spacing: 0.02em;
     }
 
-    /* Flecha apuntando hacia arriba */
     .spider-tooltip::after {
       content: '';
       position: absolute;
-      bottom: 100%; /* Posicionada en la parte superior del tooltip */
+      bottom: 100%;
       left: 50%;
       transform: translateX(-50%);
       border: 8px solid transparent;
-      border-bottom-color: #0f0f0f; /* La flecha apunta hacia arriba */
+      border-bottom-color: #0f0f0f;
     }
 
     .spider-wrap:hover .spider-tooltip {
       opacity: 1;
       visibility: visible;
-      transform: translateX(-50%) translateY(0); /* Desliza hacia abajo suavemente */
+      transform: translateX(-50%) translateY(0);
     }
 
     /* Reveal Animation */
@@ -151,6 +150,8 @@
       border: 1px solid var(--border);
       transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
+      text-decoration: none;
+      display: block;
     }
 
     .slide-card:hover {
@@ -534,6 +535,27 @@
         radial-gradient(ellipse 50% 60% at 20% 80%, rgba(165,41,0,0.025) 0%, transparent 50%),
         linear-gradient(180deg, #FFFFFF 0%, #fafafa 100%);
     }
+
+    /* Click indicator */
+    .click-indicator {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--accent);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .slide-card:hover .click-indicator {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -629,7 +651,7 @@
     </div>
   </header>
 
-  <!-- SECTION 1: Infinite Slider -->
+  <!-- SECTION 1: Infinite Slider - ACTUALIZADO CON ENLACES REALES -->
   <section id="alta-direccion" class="py-28 px-6">
     <div class="max-w-7xl mx-auto mb-16 reveal">
       <div class="section-label mb-6">
@@ -637,7 +659,7 @@
         Sección 1 de 5
       </div>
       <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-4">Alta Dirección y Acreditación Maestra</h2>
-      <p class="text-muted text-lg max-w-2xl">Las 10 certificaciones más prestigiadas: EMA, INFE, MAAC y reconocimientos de alto nivel.</p>
+      <p class="text-muted text-lg max-w-2xl">Las 10 certificaciones más prestigiadas: EMA, INFE, MAAC y reconocimientos de alto nivel. Haz clic en cada documento para verlo completo.</p>
     </div>
     
     <div class="slider-container reveal" style="transition-delay: 0.15s;">
@@ -830,20 +852,94 @@
   </div>
 
   <script>
-    // Certificate Data - 50 documents
+    // ========================================
+    // SECCIÓN 1: ENLACES REALES DE GOOGLE DRIVE
+    // ========================================
+    const section1Docs = [
+      {
+        id: 1,
+        title: 'Constancia Calificación 95',
+        subtitle: 'Evaluación de Competencia Técnica',
+        cat: 'EMA',
+        driveId: '1baO5-98aURbJnr6Rf_4DmexLfM4uelQs',
+        link: 'https://drive.google.com/file/d/1baO5-98aURbJnr6Rf_4DmexLfM4uelQs/view?usp=sharing'
+      },
+      {
+        id: 2,
+        title: 'Diploma Administración Laboratorio',
+        subtitle: 'Certificación EMA',
+        cat: 'EMA',
+        driveId: '1b5zvfjHUynR7USaB5OJHo-56XvuQV9rx',
+        link: 'https://drive.google.com/file/d/1b5zvfjHUynR7USaB5OJHo-56XvuQV9rx/view?usp=drive_link'
+      },
+      {
+        id: 3,
+        title: 'Formación Auditores Internos',
+        subtitle: 'Laboratorio VIAJE',
+        cat: 'AUDITORÍA',
+        driveId: '18n7oOsg4bWqG-pvTXm_wuiZwa6q2AlPE',
+        link: 'https://drive.google.com/file/d/18n7oOsg4bWqG-pvTXm_wuiZwa6q2AlPE/view?usp=sharing'
+      },
+      {
+        id: 4,
+        title: 'CV Isaid López Martínez',
+        subtitle: 'Currículum Vitae Profesional',
+        cat: 'CV',
+        driveId: '1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_',
+        link: 'https://drive.google.com/file/d/1T35q8qFoQvtVK9sAx-xumnvmUsz6uav_/view?usp=sharing'
+      },
+      {
+        id: 5,
+        title: 'Aseguramiento de Calidad',
+        subtitle: 'Querétaro',
+        cat: 'CALIDAD',
+        driveId: '18Tgc7dVblxrF4oqxRdaEKkLtAZRYMK10',
+        link: 'https://drive.google.com/file/d/18Tgc7dVblxrF4oqxRdaEKkLtAZRYMK10/view?usp=sharing'
+      },
+      {
+        id: 6,
+        title: 'Aseguramiento de Calidad',
+        subtitle: 'Puebla',
+        cat: 'CALIDAD',
+        driveId: '1RRUJO17BfF0rQjkEMzOkJuXBmoiHCVis',
+        link: 'https://drive.google.com/file/d/1RRUJO17BfF0rQjkEMzOkJuXBmoiHCVis/view?usp=sharing'
+      },
+      {
+        id: 7,
+        title: 'Requisitos Normativos 17025',
+        subtitle: 'Capacitación Especializada',
+        cat: 'NORMA',
+        driveId: '13iUPpOYMDN48HN8Ui14ERakQFu3gQs_o',
+        link: 'https://drive.google.com/file/d/13iUPpOYMDN48HN8Ui14ERakQFu3gQs_o/view?usp=sharing'
+      },
+      {
+        id: 8,
+        title: 'Criterios de Aplicación EMA',
+        subtitle: 'Procedimientos de Evaluación',
+        cat: 'EMA',
+        driveId: '117dvHX2Df2vMlFT91OhMEJCLibxR3VVo',
+        link: 'https://drive.google.com/file/d/117dvHX2Df2vMlFT91OhMEJCLibxR3VVo/view?usp=sharing'
+      },
+      {
+        id: 9,
+        title: 'Anexo Criterios Técnicos',
+        subtitle: 'Documentación Complementaria',
+        cat: 'TÉCNICO',
+        driveId: '1iEf10-KYFXcunk_7J1XTeM5zydu-G8EW',
+        link: 'https://drive.google.com/file/d/1iEf10-KYFXcunk_7J1XTeM5zydu-G8EW/view?usp=sharing'
+      },
+      {
+        id: 10,
+        title: 'Políticas de Trazabilidad',
+        subtitle: 'Directrices Metrológicas',
+        cat: 'METROLOGÍA',
+        driveId: '1P2xFSpamzmIdosXrEG6rGRcVYEewzr51',
+        link: 'https://drive.google.com/file/d/1P2xFSpamzmIdosXrEG6rGRcVYEewzr51/view?usp=sharing'
+      }
+    ];
+
+    // Resto de certificados (placeholders)
     const certificates = {
-      slider: [
-        { id: 1, title: 'Evaluador Técnico EMA', subtitle: 'Entidad Mexicana de Acreditación', cat: 'EMA' },
-        { id: 2, title: 'Padrón de Evaluadores Federal', subtitle: 'Registro Nacional de Evaluadores', cat: 'EMA' },
-        { id: 3, title: 'ISO/IEC 17025:2017', subtitle: 'Implementador Certificado', cat: 'ISO' },
-        { id: 4, title: 'Experto Técnico INFE', subtitle: 'Instituto Nacional de Formación', cat: 'INFE' },
-        { id: 5, title: 'MAAC Miembro Titular', subtitle: 'Academia Mexicana de Acreditación', cat: 'MAAC' },
-        { id: 6, title: 'Auditor Líder ISO 17025', subtitle: 'Certificación Internacional', cat: 'ISO' },
-        { id: 7, title: 'Diplomado Gestión de Calidad', subtitle: 'Laboratorios de Ensayo', cat: 'DIPLOMADO' },
-        { id: 8, title: 'NMX-EC-17025-IMNC', subtitle: 'Especialista en Implementación', cat: 'NMX' },
-        { id: 9, title: 'Reconocimiento ILAC-MRA', subtitle: 'Acreditación Internacional', cat: 'ILAC' },
-        { id: 10, title: 'Gestión de Calidad Avanzada', subtitle: 'Programa de Excelencia', cat: 'CALIDAD' },
-      ],
       grid: [
         { id: 11, title: 'Calibración de Equipos', subtitle: 'Trazabilidad Metrológica', cat: 'Metrología' },
         { id: 12, title: 'Análisis de Incertidumbre', subtitle: 'Estadística Aplicada', cat: 'Calidad' },
@@ -861,7 +957,7 @@
         { id: 22, title: 'Ingeniería de Carreteras', subtitle: 'Proyectos de Infraestructura', cat: 'Infraestructura' },
         { id: 23, title: 'Congreso Nacional de Ingeniería', subtitle: 'Ponencia Técnica', cat: 'Congreso' },
         { id: 24, title: 'Foro de Infraestructura', subtitle: 'Participación como Experto', cat: 'Evento' },
-        { id: 25, title: 'Inspección de Oras Viales', subtitle: 'Control de Calidad en Campo', cat: 'Campo' },
+        { id: 25, title: 'Inspección de Obras Viales', subtitle: 'Control de Calidad en Campo', cat: 'Campo' },
         { id: 26, title: 'Seminario de Pavimentos', subtitle: 'Actualización Técnica', cat: 'Seminario' },
         { id: 27, title: 'Normatividad en Carreteras', subtitle: 'Especificaciones SCT', cat: 'Normativa' },
         { id: 28, title: 'Congreso de Calidad', subtitle: 'Certificado de Asistencia', cat: 'Congreso' },
@@ -877,7 +973,7 @@
         { id: 36, title: 'Compactación Proctor', subtitle: 'Densidad Máxima', h: 320 },
         { id: 37, title: 'Pruebas de Carga', subtitle: 'Capacidad de Soporte', h: 290 },
         { id: 38, title: 'Durabilidad del Concreto', subtitle: 'Ensayos Especiales', h: 350 },
-        { id: 39, title: 'Agregados Petreos', subtitle: 'Caracterización Física', h: 270 },
+        { id: 39, title: 'Agregados Pétreos', subtitle: 'Caracterización Física', h: 270 },
         { id: 40, title: 'Suelos de Fundación', subtitle: 'Análisis Estructural', h: 310 },
       ],
       list: [
@@ -905,7 +1001,10 @@
     // Placeholder generator
     const placeholder = (text, cat) => `https://placehold.co/400x300/f8f8f8/1a1a1a?text=${encodeURIComponent(text)}`;
 
-    // DOM Elements - Initialize before use
+    // Google Drive image URL generator
+    const getDriveImage = (driveId) => `https://drive.google.com/uc?export=view&id=${driveId}`;
+
+    // DOM Elements
     const navbar = document.getElementById('navbar');
     const modal = document.getElementById('modal');
     const modalImg = document.getElementById('modalImg');
@@ -920,12 +1019,19 @@
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
 
-    // Render Section 1: Slider
+    // ========================================
+    // RENDER SECTION 1: SLIDER WITH REAL LINKS
+    // ========================================
     function renderSlider() {
-      const items = [...certificates.slider, ...certificates.slider];
+      // Duplicar para loop infinito
+      const items = [...section1Docs, ...section1Docs];
       sliderTrack.innerHTML = items.map(c => `
-        <div class="slide-card" onclick="openModal('${c.title}', '${c.subtitle}', '${c.cat}')">
-          <img src="${placeholder(c.title, c.cat)}" alt="${c.title}" loading="lazy">
+        <a href="${c.link}" target="_blank" rel="noopener noreferrer" class="slide-card">
+          <span class="click-indicator">Ver documento</span>
+          <img src="${getDriveImage(c.driveId)}" 
+               alt="${c.title}" 
+               loading="lazy"
+               onerror="this.src='${placeholder(c.title, c.cat)}'">
           <div class="p-6">
             <div class="flex items-center gap-3 mb-3">
               <span class="text-xs font-semibold text-rust uppercase tracking-wider">${c.cat}</span>
@@ -934,7 +1040,7 @@
             <h3 class="font-display text-xl text-charcoal">${c.title}</h3>
             <p class="text-sm text-muted mt-2">${c.subtitle}</p>
           </div>
-        </div>
+        </a>
       `).join('');
     }
 
